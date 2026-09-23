@@ -1,15 +1,15 @@
 site_id,date,alert_type,severity,start,end,advisory
-S01,2025-05-09,heatwave,orange,2025-05-09 11:00:00,2025-05-09 16:00:00,Mandatory 15-min shaded rest every 2 h; hydration checks; watch coolant temp
-S01,2025-05-13,heatwave,orange,2025-05-13 11:00:00,2025-05-13 16:00:00,Mandatory 15-min shaded rest every 2 h; hydration checks; watch coolant temp
-S01,2025-05-14,heatwave,orange,2025-05-14 11:00:00,2025-05-14 16:00:00,Mandatory 15-min shaded rest every 2 h; hydration checks; watch coolant temp
-S01,2025-05-15,thunderstorm_lightning,orange,2025-05-15 15:40:00,2025-05-15 16:40:00,Suspend boom/elevated work; operators stay in cab or shelter
-S01,2025-05-15,heavy_rain,yellow,2025-05-15 16:00:00,2025-05-15 23:59:00,Check trench walls and slopes before next shift; expect soft ground
-S01,2025-05-22,heatwave,orange,2025-05-22 11:00:00,2025-05-22 16:00:00,Mandatory 15-min shaded rest every 2 h; hydration checks; watch coolant temp
-S02,2025-05-03,thunderstorm_lightning,orange,2025-05-03 14:40:00,2025-05-03 15:40:00,Suspend boom/elevated work; operators stay in cab or shelter
-S02,2025-05-03,heavy_rain,yellow,2025-05-03 15:00:00,2025-05-03 23:59:00,Check trench walls and slopes before next shift; expect soft ground
-S02,2025-05-24,thunderstorm_lightning,orange,2025-05-24 14:40:00,2025-05-24 15:40:00,Suspend boom/elevated work; operators stay in cab or shelter
-S02,2025-05-27,thunderstorm_lightning,orange,2025-05-27 16:40:00,2025-05-27 17:40:00,Suspend boom/elevated work; operators stay in cab or shelter
-S02,2025-05-27,heavy_rain,yellow,2025-05-27 17:00:00,2025-05-27 23:59:00,Check trench walls and slopes before next shift; expect soft ground
-S03,2025-05-20,thunderstorm_lightning,orange,2025-05-20 14:40:00,2025-05-20 15:40:00,Suspend boom/elevated work; operators stay in cab or shelter
-S03,2025-05-25,thunderstorm_lightning,orange,2025-05-25 16:40:00,2025-05-25 17:40:00,Suspend boom/elevated work; operators stay in cab or shelter
-S03,2025-05-25,heavy_rain,yellow,2025-05-25 17:00:00,2025-05-25 23:59:00,Check trench walls and slopes before next shift; expect soft ground
+S01,2025-05-09,heatwave,orange,2025-05-09T11:00:00Z,2025-05-09T16:00:00Z,Mandatory 15-min shaded rest every 2 h; hydration checks; watch coolant temp
+S01,2025-05-13,heatwave,orange,2025-05-13T11:00:00Z,2025-05-13T16:00:00Z,Mandatory 15-min shaded rest every 2 h; hydration checks; watch coolant temp
+S01,2025-05-14,heatwave,orange,2025-05-14T11:00:00Z,2025-05-14T16:00:00Z,Mandatory 15-min shaded rest every 2 h; hydration checks; watch coolant temp
+S01,2025-05-15,thunderstorm_lightning,orange,2025-05-15T15:40:00Z,2025-05-15T16:40:00Z,Suspend boom/elevated work; operators stay in cab or shelter
+S01,2025-05-15,heavy_rain,yellow,2025-05-15T16:00:00Z,2025-05-15T23:59:00Z,Check trench walls and slopes before next shift; expect soft ground
+S01,2025-05-22,heatwave,orange,2025-05-22T11:00:00Z,2025-05-22T16:00:00Z,Mandatory 15-min shaded rest every 2 h; hydration checks; watch coolant temp
+S02,2025-05-03,thunderstorm_lightning,orange,2025-05-03T14:40:00Z,2025-05-03T15:40:00Z,Suspend boom/elevated work; operators stay in cab or shelter
+S02,2025-05-03,heavy_rain,yellow,2025-05-03T15:00:00Z,2025-05-03T23:59:00Z,Check trench walls and slopes before next shift; expect soft ground
+S02,2025-05-24,thunderstorm_lightning,orange,2025-05-24T14:40:00Z,2025-05-24T15:40:00Z,Suspend boom/elevated work; operators stay in cab or shelter
+S02,2025-05-27,thunderstorm_lightning,orange,2025-05-27T16:40:00Z,2025-05-27T17:40:00Z,Suspend boom/elevated work; operators stay in cab or shelter
+S02,2025-05-27,heavy_rain,yellow,2025-05-27T17:00:00Z,2025-05-27T23:59:00Z,Check trench walls and slopes before next shift; expect soft ground
+S03,2025-05-20,thunderstorm_lightning,orange,2025-05-20T14:40:00Z,2025-05-20T15:40:00Z,Suspend boom/elevated work; operators stay in cab or shelter
+S03,2025-05-25,thunderstorm_lightning,orange,2025-05-25T16:40:00Z,2025-05-25T17:40:00Z,Suspend boom/elevated work; operators stay in cab or shelter
+S03,2025-05-25,heavy_rain,yellow,2025-05-25T17:00:00Z,2025-05-25T23:59:00Z,Check trench walls and slopes before next shift; expect soft ground

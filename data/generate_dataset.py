@@ -14,6 +14,8 @@ from datetime import datetime, timedelta, date
 import numpy as np
 import pandas as pd
 
+from shared.constants import AlertCode, ProximityZone, SeatbeltStatus, TaskStatus
+
 p = argparse.ArgumentParser()
 p.add_argument("--seed", type=int, default=42)
 p.add_argument("--days", type=int, default=30)
@@ -459,7 +461,7 @@ for di, d in enumerate(days):
                 prox = 20.0
             if "proximity_breach" in types:
                 prox = rng.uniform(0.6, 1.8)
-            zone = "danger" if prox < 2 else ("caution" if prox < 5 else "clear")
+            zone = ProximityZone.DANGER if prox < 2 else (ProximityZone.CAUTION if prox < 5 else ProximityZone.CLEAR)
             # temperatures (first-order lag)
             tgt_h = {"working": 62, "idle": 50, "travel": 55}.get(state, temp)
             hyd_t += (tgt_h - hyd_t) * 0.04
@@ -533,18 +535,20 @@ for di, d in enumerate(days):
             aid = ";".join(sorted({a for a, _ in labels}))
             atype = ";".join(sorted({t for _, t in labels}))
             telemetry.append((ts, site, mid, op, task_id if state in ("working", "idle", "travel") and ti < len(plan) else None,
-                              state, power_on, present, "Fastened" if belt else "Unfastened",
+                              state, power_on, present, SeatbeltStatus.FASTENED if belt else SeatbeltStatus.UNFASTENED,
                               None if np.isnan(rpm) else round(rpm), round(speed, 1),
                               round(level, 1) if c["power"] == "diesel" else np.nan,
                               round(level, 1) if c["power"] == "electric" else np.nan,
                               round(fuel_rate, 2) if c["power"] == "diesel" else np.nan,
                               round(power_kw, 1) if c["power"] == "electric" else np.nan,
-                              round(e_used, 3), round(hyd_p), round(hyd_t, 1), round(cool_t, 1),
+                              round(e_used, 3) if c["power"] == "diesel" else np.nan,
+                              round(-e_used, 3) if c["power"] == "electric" else np.nan,
+                              round(hyd_p), round(hyd_t, 1), round(cool_t, 1),
                               cycles, round(prox, 1), zone, harsh, temp, rain, round(S["engine_hours"], 2),
                               aid, atype))
 
         for tk in plan:
-            status = "completed" if tk["actual_end"] else ("partial" if tk["actual_start"] else "not_started")
+            status = TaskStatus.COMPLETED if tk["actual_end"] else (TaskStatus.PARTIAL if tk["actual_start"] else TaskStatus.SCHEDULED)
             dur = int((tk["actual_end"] - tk["actual_start"]).total_seconds() // 60) if tk["actual_end"] else None
             tasks_out.append(dict(task_id=tk["task_id"], date=d, site_id=site, machine_id=mid, machine_class=cls,
                                   operator_id=op, task_type=tk["task_type"], unit=tk["unit"], quantity=tk["quantity"],
@@ -555,12 +559,12 @@ for di, d in enumerate(days):
                                   completed_quantity=round(min(tk["progress"], tk["quantity"]), 1),
                                   status=status, avg_temp_c=round(float(np.mean(tk["temps"])), 1) if tk["temps"] else None,
                                   rain_during_task_mm=round(tk["rain_mm"], 1),
-                                  assigned_by="ADMIN01"))
+                                  assigned_by="ADM01"))
 
 # ------------------------------------------------------------------ frames
-TCOLS = ["timestamp", "site_id", "machine_id", "operator_id", "task_id", "state", "power_on", "operator_present",
+TCOLS = ["timestamp", "site_id", "machine_id", "operator_id", "task_id", "state", "is_power_on", "is_operator_present",
          "seatbelt_status", "engine_rpm", "ground_speed_kmh", "fuel_level_pct", "battery_soc_pct", "fuel_rate_lph",
-         "power_kw", "energy_used", "hydraulic_pressure_bar", "hydraulic_oil_temp_c", "coolant_temp_c",
+         "power_kw", "fuel_used_l", "energy_used_kwh", "hydraulic_pressure_bar", "hydraulic_oil_temp_c", "coolant_temp_c",
          "load_cycles", "proximity_min_m", "proximity_zone", "harsh_events", "ambient_temp_c", "rain_mm_hr",
          "engine_hours", "anomaly_id", "anomaly_type"]
 tel = pd.DataFrame(telemetry, columns=TCOLS)
@@ -608,21 +612,21 @@ for mid, g in tel.groupby("machine_id"):
     g = g.reset_index(drop=True)
     moving = g["state"].isin(["working", "travel"])
     rules = [
-        ("SEATBELT_UNFASTENED_MOVING", "critical", (g["seatbelt_status"] == "Unfastened") & moving, 1),
-        ("UNATTENDED_RUNNING", "high", (g["power_on"] == 1) & (g["operator_present"] == 0), 5),
-        ("PROXIMITY_DANGER", "critical", (g["proximity_zone"] == "danger") & moving, 1),
-        ("OVERSPEED", "medium", g["ground_speed_kmh"] > SITE_SPEED_LIMIT, 1),
-        ("COOLANT_HIGH", "high", g["coolant_temp_c"] > 103, 3),
-        ("EXCESSIVE_IDLE", "low", g["state"] == "idle", 20),
-        ("HARSH_OPERATION", "medium", g["harsh_events"] > 0, 1),
+        (AlertCode.SEATBELT_UNFASTENED_MOVING, "critical", (g["seatbelt_status"] == SeatbeltStatus.UNFASTENED) & moving, 1),
+        (AlertCode.UNATTENDED_RUNNING, "high", (g["is_power_on"] == 1) & (g["is_operator_present"] == 0), 5),
+        (AlertCode.PROXIMITY_DANGER, "critical", (g["proximity_zone"] == ProximityZone.DANGER) & moving, 1),
+        (AlertCode.OVERSPEED, "medium", g["ground_speed_kmh"] > SITE_SPEED_LIMIT, 1),
+        (AlertCode.COOLANT_HIGH, "high", g["coolant_temp_c"] > 103, 3),
+        (AlertCode.EXCESSIVE_IDLE, "low", g["state"] == "idle", 20),
+        (AlertCode.HARSH_OPERATION, "medium", g["harsh_events"] > 0, 1),
     ]
     for code, sev, mask, min_len in rules:
         for s, e, n in runs(mask.values, g):
             if n >= min_len:
-                if code == "HARSH_OPERATION" and n < 3:
+                if code == AlertCode.HARSH_OPERATION and n < 3:
                     continue
                 alerts.append(dict(machine_id=mid, operator_id=g.loc[g["timestamp"] == s, "operator_id"].iloc[0],
-                                   site_id=g["site_id"].iloc[0], rule=code, severity=sev,
+                                   site_id=g["site_id"].iloc[0], alert_code=code, severity=sev,
                                    start=s, end=e, duration_min=n))
 alerts = pd.DataFrame(alerts).sort_values("start").reset_index(drop=True)
 alerts.insert(0, "alert_id", [f"AL{i+1:05d}" for i in range(len(alerts))])
@@ -635,18 +639,18 @@ for _, a in alerts.iterrows():
     al_win.add((a["machine_id"], t))
 rows = []
 for (mid, win), g in tel.groupby(["machine_id", "window"]):
-    powered = g[g["power_on"] == 1]
-    unf = ((g["seatbelt_status"] == "Unfastened") & (g["power_on"] == 1)).sum()
+    powered = g[g["is_power_on"] == 1]
+    unf = ((g["seatbelt_status"] == SeatbeltStatus.UNFASTENED) & (g["is_power_on"] == 1)).sum()
     diesel = g["fuel_level_pct"].notna().any()
     rows.append({"Timestamp": win, "Machine ID": mid,
                  "Operator ID": g["operator_id"].mode().iloc[0],
                  "Engine Hours": round(g["engine_hours"].iloc[-1], 1),
-                 "Fuel Used (L)": round(g["energy_used"].clip(lower=0).sum(), 1) if diesel else np.nan,
+                 "Fuel Used (L)": round(g["fuel_used_l"].clip(lower=0).sum(), 1) if diesel else np.nan,
                  "Load Cycles": int(g["load_cycles"].sum()),
                  "Idling Time (min)": int((g["state"] == "idle").sum()),
-                 "Seatbelt Status": "Unfastened" if unf >= 3 else "Fastened",
+                 "Seatbelt Status": "unfastened" if unf >= 3 else "fastened",
                  "Safety Alert Triggered": "Yes" if (mid, win) in al_win else "No",
-                 "Energy Used (kWh)": np.nan if diesel else round(g["energy_used"].clip(lower=0).sum(), 1),
+                 "Energy Used (kWh)": np.nan if diesel else round(g["energy_used_kwh"].clip(lower=0).sum(), 1),
                  "Working Time (min)": int((g["state"] == "working").sum()),
                  "Powered Time (min)": int(len(powered))})
 summary = pd.DataFrame(rows).sort_values(["Timestamp", "Machine ID"])
@@ -717,20 +721,30 @@ for k, (d, s) in enumerate([(days[9], "S02"), (days[20], "S03")]):
 inc_df = pd.DataFrame(inc)
 
 # ------------------------------------------------------------------ write
+def write_utc_csv(frame, path, timestamp_columns):
+    output = frame.copy()
+    for column in timestamp_columns:
+        if column in output.columns:
+            output[column] = (pd.to_datetime(output[column], utc=True)
+                              .dt.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    output.to_csv(path, index=False)
+
+
 out = args.out
-tel.to_csv(f"{out}/telemetry_1min.csv", index=False)
+write_utc_csv(tel, f"{out}/telemetry_1min.csv", ["timestamp"])
 summary.to_csv(f"{out}/machine_summary_2h.csv", index=False)
-pd.DataFrame(tasks_out).to_csv(f"{out}/tasks.csv", index=False)
+write_utc_csv(pd.DataFrame(tasks_out), f"{out}/tasks.csv", ["planned_start", "actual_start", "actual_end"])
 machines_df.to_csv(f"{out}/machines.csv", index=False)
 ops_df.to_csv(f"{out}/operators.csv", index=False)
 sites_df.to_csv(f"{out}/sites.csv", index=False)
 points_df.to_csv(f"{out}/energy_points.csv", index=False)
-pd.DataFrame(energy_events).to_csv(f"{out}/energy_events.csv", index=False)
-pd.DataFrame(weather_rows).to_csv(f"{out}/weather_hourly.csv", index=False)
-pd.DataFrame(weather_alerts).to_csv(f"{out}/weather_alerts.csv", index=False)
-alerts.to_csv(f"{out}/safety_alerts.csv", index=False)
-gt_events.to_csv(f"{out}/anomalies_ground_truth.csv", index=False)
+energy_events_df = pd.DataFrame(energy_events)
+write_utc_csv(energy_events_df, f"{out}/energy_events.csv", ["start", "end"])
+write_utc_csv(pd.DataFrame(weather_rows), f"{out}/weather_hourly.csv", ["timestamp"])
+write_utc_csv(pd.DataFrame(weather_alerts), f"{out}/weather_alerts.csv", ["start", "end"])
+write_utc_csv(alerts, f"{out}/safety_alerts.csv", ["start", "end"])
+write_utc_csv(gt_events, f"{out}/anomalies_ground_truth.csv", ["start", "end"])
 train_df.to_csv(f"{out}/training_records.csv", index=False)
-inc_df.to_csv(f"{out}/incidents.csv", index=False)
+write_utc_csv(inc_df, f"{out}/incidents.csv", ["reported_at"])
 print("telemetry rows:", len(tel), "| tasks:", len(tasks_out), "| anomalies:", len(gt_events),
       "| alerts:", len(alerts), "| energy events:", len(energy_events), "| weather alerts:", len(weather_alerts))
