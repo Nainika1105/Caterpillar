@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-cat-dark text-slate-100 font-sans min-h-screen overflow-x-hidden;
+  }
+}
+
+/* Custom Caterpillar Industrial Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #141518;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2E343D;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FFCD11;
+}
+
+/* Leaflet Map Custom Styling */
+.leaflet-container {
+  font-family: inherit;
+  background-color: #121316 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #FFFFFF !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
+  padding: 4px !important;
+}
+
+.leaflet-popup-tip {
+  background: #FFFFFF !important;
+}
+
+/* Industrial Hazard Stripe Accent */
+.bg-hazard-stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #FFCD11,
+    #FFCD11 12px,
+    #141518 12px,
+    #141518 24px
+  );
+}

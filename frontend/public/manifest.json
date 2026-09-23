@@ -1,0 +1,16 @@
+{
+  "short_name": "CAT Assistant",
+  "name": "CAT Smart Operator Assistant & Fleet Intelligence",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#121316",
+  "theme_color": "#FFCD11",
+  "display": "standalone",
+  "orientation": "landscape-primary"
+}
