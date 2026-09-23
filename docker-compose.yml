@@ -95,6 +95,28 @@ services:
       - "8002:8000"
     restart: unless-stopped
 
+  # Edge Gateway (Member 1 Phase 2)
+  edge:
+    build:
+      context: ./services/edge
+      dockerfile: Dockerfile
+    container_name: caterpillar-edge
+    depends_on:
+      mosquitto:
+        condition: service_started
+    environment:
+      MQTT_HOST: mosquitto
+      MQTT_PORT: 1883
+      MACHINE_ID: BH001
+      SITE_ID: S01
+      OPERATOR_ID: OP1011
+      RULES_FILE: /app/rules.yaml
+      VOICE_BACKEND: mock
+      LOG_LEVEL: INFO
+    volumes:
+      - ./services/edge/rules.yaml:/app/rules.yaml:ro
+    restart: unless-stopped
+
 volumes:
   timescale_data:
   mosquitto_data:

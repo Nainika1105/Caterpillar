@@ -79,6 +79,7 @@ def on_mqtt_message(client, userdata, msg):
         if "telemetry" in topic:
             handle_telemetry(payload)
         elif "alerts" in topic:
+            logger.info(f"[ALERT] Received: {payload.get('rule')}")
             handle_alert(payload)
 
     except json.JSONDecodeError as e:
@@ -165,15 +166,26 @@ def handle_alert(payload: dict):
         )
         conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
         cursor = conn.cursor()
+
+        # Convert data dict to JSON string for JSONB column
+        data_json = json.dumps(payload.get('data', {}))
+
         cursor.execute("""
             INSERT INTO alerts (
                 alert_id, timestamp, machine_id, operator_id, site_id,
                 rule, severity, message, data, acknowledged
-            ) VALUES (
-                %(alert_id)s, %(timestamp)s, %(machine_id)s, %(operator_id)s,
-                %(site_id)s, %(rule)s, %(severity)s, %(message)s, %(data)s, FALSE
-            )
-        """, payload)
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, FALSE)
+        """, (
+            payload.get('alert_id'),
+            payload.get('timestamp'),
+            payload.get('machine_id'),
+            payload.get('operator_id'),
+            payload.get('site_id'),
+            payload.get('rule'),
+            payload.get('severity'),
+            payload.get('message'),
+            data_json
+        ))
         cursor.close()
         conn.close()
         stats["alerts_stored"] += 1

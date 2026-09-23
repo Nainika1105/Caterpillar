@@ -1,0 +1,110 @@
+# Edge Rule Engine Configuration
+# Rules evaluated locally on the machine with minimal latency
+# No network dependency - critical for safety
+
+rules:
+  # P0: Safety Critical Rules (must alert immediately)
+
+  - name: UNBELTED_WHILE_MOVING
+    severity: critical
+    condition:
+      - seatbelt_status: "Unfastened"
+      - ground_speed_kmh: "> 5"
+    action:
+      - alert: "Seatbelt unfastened while moving"
+      - voice: true
+      - log_incident: true
+    threshold: immediate (0s)
+
+  - name: PROXIMITY_WARNING
+    severity: warning
+    condition:
+      - proximity_min_m: "< 10"
+      - power_on: true
+    action:
+      - alert: "Worker or object nearby"
+      - voice: true
+    threshold: immediate (0s)
+
+  - name: PROXIMITY_CRITICAL
+    severity: critical
+    condition:
+      - proximity_min_m: "< 3"
+      - power_on: true
+    action:
+      - alert: "Critical: collision risk!"
+      - voice: true
+      - log_incident: true
+    threshold: immediate (0s)
+
+  - name: EXCESSIVE_SPEED
+    severity: warning
+    condition:
+      - ground_speed_kmh: "> 30"  # Adjust per machine type
+      - state: ["working", "traveling"]
+    action:
+      - alert: "Speed exceeds limit"
+      - voice: true
+    threshold: 30s (alert only if sustained)
+
+  - name: UNATTENDED_RUNNING
+    severity: warning
+    condition:
+      - power_on: true
+      - operator_present: false
+      - engine_hours_idle: "> 5m"  # Idle for more than 5 minutes
+    action:
+      - alert: "Machine running unattended"
+      - voice: true
+    threshold: 5m
+
+  - name: COOLANT_OVERHEAT
+    severity: critical
+    condition:
+      - coolant_temp_c: "> 95"
+    action:
+      - alert: "Engine overheating"
+      - voice: true
+      - log_incident: true
+    threshold: immediate (0s)
+
+  # P1: Operational Alerts
+
+  - name: LOW_FUEL
+    severity: warning
+    condition:
+      - fuel_level_pct: "< 20"
+      - fuel_level_pct: "is not null"  # Diesel only
+    action:
+      - alert: "Low fuel warning"
+    threshold: immediate (0s)
+
+  - name: LOW_BATTERY
+    severity: warning
+    condition:
+      - battery_soc_pct: "< 20"
+      - battery_soc_pct: "is not null"  # Electric only
+    action:
+      - alert: "Low battery warning"
+    threshold: immediate (0s)
+
+  - name: HARSH_ACCELERATION
+    severity: info
+    condition:
+      - harsh_events: "> 3"  # More than 3 in last minute
+    action:
+      - alert: "Harsh driving detected"
+    threshold: 60s (aggregate)
+
+# Rule evaluation order: severity level determines priority
+# Critical rules evaluated first, every 100ms
+# Warning rules evaluated every 500ms
+# Info rules evaluated every 1000ms (1s)
+
+thresholds:
+  critical: 100ms    # Seatbelt, proximity, temperature
+  warning: 500ms     # Speed, fuel, unattended
+  info: 1000ms       # Harsh events, analytics
+
+# Safety guarantee: All critical rules have 0ms threshold
+# No alert can be delayed due to network
