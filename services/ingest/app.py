@@ -174,7 +174,7 @@ def connect_redis():
 def connect_mqtt():
     """Connect to MQTT broker"""
     try:
-        client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1)
+        client = mqtt.Client()
         client.on_connect = on_mqtt_connect
         client.on_message = on_mqtt_message
         client.connect(MQTT_HOST, MQTT_PORT, keepalive=60)

@@ -24,7 +24,7 @@ load_dotenv()
 MQTT_HOST = os.getenv("MQTT_HOST", "localhost")
 MQTT_PORT = int(os.getenv("MQTT_PORT", 1883))
 DATA_DIR = Path(os.getenv("DATA_DIR", "./data"))
-PLAYBACK_SPEED = float(os.getenv("PLAYBACK_SPEED", 1.0))  # 1.0 = real-time, 60 = 60x faster
+PLAYBACK_SPEED = float(os.getenv("PLAYBACK_SPEED", "1.0"))  # 1.0 = real-time, 60 = 60x faster
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 
 # Logging
@@ -33,6 +33,9 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+# Log configuration
+logger.info(f"Configuration: MQTT_HOST={MQTT_HOST}, PLAYBACK_SPEED={PLAYBACK_SPEED}x")
 
 
 class TelemetryMessage(BaseModel):
@@ -83,7 +86,7 @@ class TelemetryMessage(BaseModel):
 
 class SimulatorMQTT:
     def __init__(self):
-        self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1)
+        self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
         self.client.on_disconnect = self.on_disconnect
         self.client.on_publish = self.on_publish
@@ -112,11 +115,12 @@ class SimulatorMQTT:
         try:
             self.client.connect(MQTT_HOST, MQTT_PORT, keepalive=60)
             self.client.loop_start()
-            # Wait for connection
+            # Wait for connection (up to 3 seconds)
+            import time
             for _ in range(30):
                 if self.connected:
                     return True
-                asyncio.sleep(0.1)
+                time.sleep(0.1)
             logger.error("Failed to connect to MQTT after 3 seconds")
             return False
         except Exception as e:
