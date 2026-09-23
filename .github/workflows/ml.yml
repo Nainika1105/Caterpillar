@@ -19,5 +19,8 @@ jobs:
         env:
           CAT_MODEL_DIR: /tmp/cat-model-v1
       - run: python -m ml.demo
-      - run: python -m ml.training.improve fit
+      - name: Test model improvement
+        run: python -m ml.training.improve fit
+        env:
+          CAT_MODEL_DIR: /tmp/cat-model-v2
       - run: python -m ml.demo_v2
