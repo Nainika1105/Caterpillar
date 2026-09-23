@@ -17,13 +17,17 @@ def client():
 
 def test_health_and_admin_login(client: TestClient) -> None:
     assert client.get("/health").json() == {"status": "ok", "service": "api"}
-    response = client.post("/api/v1/auth/token", data={"username": "admin", "password": "admin"})
+    response = client.post(
+        "/api/v1/auth/token", data={"username": "admin", "password": "admin"}
+    )
     assert response.status_code == 200
     assert response.json()["role"] == "admin"
 
 
 def test_admin_can_create_and_list_task(client: TestClient) -> None:
-    token = client.post("/api/v1/auth/token", data={"username": "admin", "password": "admin"}).json()["access_token"]
+    token = client.post(
+        "/api/v1/auth/token", data={"username": "admin", "password": "admin"}
+    ).json()["access_token"]
     headers = {"Authorization": f"Bearer {token}"}
     created = client.post(
         "/api/v1/tasks",
@@ -43,8 +47,12 @@ def test_admin_can_create_and_list_task(client: TestClient) -> None:
     assert any(task["id"] == created.json()["id"] for task in listed.json()["items"])
 
 
-def test_model_contract_is_available_to_authenticated_clients(client: TestClient) -> None:
-    token = client.post("/api/v1/auth/token", data={"username": "admin", "password": "admin"}).json()["access_token"]
+def test_model_contract_is_available_to_authenticated_clients(
+    client: TestClient,
+) -> None:
+    token = client.post(
+        "/api/v1/auth/token", data={"username": "admin", "password": "admin"}
+    ).json()["access_token"]
     response = client.post(
         "/api/v1/predict/anomaly",
         headers={"Authorization": f"Bearer {token}"},

@@ -4,7 +4,9 @@ from backend.app.main import app
 
 
 def auth_headers(client: TestClient) -> dict[str, str]:
-    token = client.post("/api/v1/auth/token", data={"username": "admin", "password": "admin"}).json()["access_token"]
+    token = client.post(
+        "/api/v1/auth/token", data={"username": "admin", "password": "admin"}
+    ).json()["access_token"]
     return {"Authorization": f"Bearer {token}"}
 
 
@@ -22,12 +24,21 @@ def test_reference_data_and_prediction_contracts() -> None:
         energy = client.post(
             "/api/v1/predict/energy-runout",
             headers=headers,
-            json={"machine_id": "EXC001", "energy_remaining_pct": 50, "burn_rate_per_hour": 10, "remaining_task_min": 30},
+            json={
+                "machine_id": "EXC001",
+                "energy_remaining_pct": 50,
+                "burn_rate_per_hour": 10,
+                "remaining_task_min": 30,
+            },
         )
         assignment = client.post(
             "/api/v1/predict/assignment",
             headers=headers,
-            json={"site_id": "S01", "machine_class": "excavator", "task_duration_min": 60},
+            json={
+                "site_id": "S01",
+                "machine_class": "excavator",
+                "task_duration_min": 60,
+            },
         )
         assert energy.status_code == assignment.status_code == 200
         assert energy.json()["will_complete_task"] is True
@@ -52,12 +63,20 @@ def test_alert_and_weather_ingestion() -> None:
         weather = client.post(
             "/api/v1/weather",
             headers=headers,
-            json={"site_id": "S01", "observed_at": "2026-09-23T08:00:00Z", "temperature_c": 34, "rain_mm": 0},
+            json={
+                "site_id": "S01",
+                "observed_at": "2026-09-23T08:00:00Z",
+                "temperature_c": 34,
+                "rain_mm": 0,
+            },
         )
         assert alert.status_code == 201
         assert weather.status_code == 201
         assert client.get("/api/v1/alerts", headers=headers).json()["items"]
-        assert client.get("/api/v1/weather/S01", headers=headers).json()["site_id"] == "S01"
+        assert (
+            client.get("/api/v1/weather/S01", headers=headers).json()["site_id"]
+            == "S01"
+        )
 
 
 def test_task_incident_and_training_resource_operations() -> None:
@@ -66,14 +85,25 @@ def test_task_incident_and_training_resource_operations() -> None:
         task = client.post(
             "/api/v1/tasks",
             headers=headers,
-            json={"task_type": "excavation", "site_id": "S01", "planned_duration_min": 60},
+            json={
+                "task_type": "excavation",
+                "site_id": "S01",
+                "planned_duration_min": 60,
+            },
         )
         task_id = task.json()["id"]
-        updated = client.patch(f"/api/v1/tasks/{task_id}", headers=headers, json={"notes": "priority"})
+        updated = client.patch(
+            f"/api/v1/tasks/{task_id}", headers=headers, json={"notes": "priority"}
+        )
         incident = client.post(
             "/api/v1/incidents",
             headers=headers,
-            json={"site_id": "S01", "category": "site_hazard", "description": "Loose rock", "severity": "medium"},
+            json={
+                "site_id": "S01",
+                "category": "site_hazard",
+                "description": "Loose rock",
+                "severity": "medium",
+            },
         )
         training = client.post(
             "/api/v1/training",
