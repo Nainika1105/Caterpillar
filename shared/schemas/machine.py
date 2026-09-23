@@ -1,5 +1,6 @@
-from pydantic import BaseModel, ConfigDict, Field
 from enum import StrEnum
+
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class MachineClass(StrEnum):
