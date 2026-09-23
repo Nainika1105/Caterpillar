@@ -14,7 +14,10 @@ jobs:
       - run: black --check ml shared tests
       - run: mypy shared
       - run: pytest -q
-      - run: python -m ml.training.train
+      - name: Test model training
+        run: python -m ml.training.train
+        env:
+          CAT_MODEL_DIR: /tmp/cat-model-v1
       - run: python -m ml.demo
       - run: python -m ml.training.improve fit
       - run: python -m ml.demo_v2
