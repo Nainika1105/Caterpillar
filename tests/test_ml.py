@@ -6,6 +6,9 @@ import pandas as pd
 import pytest
 from pydantic import ValidationError
 
+# Phase 4 tests - skip if ML dependencies not available
+pytest.importorskip("xgboost")
+
 from ml.features.build import TASK_FEATURES, shift_features, task_features
 from ml.features.data import load_data, utc
 from ml.inference import predict_energy_runout, rank_assignments

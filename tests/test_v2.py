@@ -5,6 +5,9 @@ import numpy as np
 import pandas as pd
 import pytest
 
+# Phase 4 tests - skip if ML dependencies not available
+pytest.importorskip("xgboost")
+
 from ml.anomaly import fit_fuel_model, fuel_features, predict_fuel
 from ml.energy import ENERGY_FEATURES, energy_examples, fit_energy, history_features
 from ml.features.data import load_data

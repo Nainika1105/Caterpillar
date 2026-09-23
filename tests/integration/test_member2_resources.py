@@ -1,3 +1,8 @@
+import pytest
+
+# Phase 3 tests - skip if fastapi not available
+pytest.importorskip("fastapi")
+
 from fastapi.testclient import TestClient
 
 from backend.app.main import app

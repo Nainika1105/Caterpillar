@@ -3,6 +3,9 @@ from pathlib import Path
 import joblib
 import pytest
 
+# Phase 4 tests - skip if ML dependencies not available
+pytest.importorskip("xgboost")
+
 from ml.features.build import TASK_FEATURES, task_features
 from ml.features.data import load_data
 from ml.inference import ModelService, suggest_charger

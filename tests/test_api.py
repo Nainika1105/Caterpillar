@@ -4,6 +4,10 @@ os.environ["DATABASE_URL"] = "sqlite:///./test_backend.db"
 os.environ["SECRET_KEY"] = "test-secret"
 
 import pytest
+
+# Phase 3 tests - skip if fastapi not available
+pytest.importorskip("fastapi")
+
 from fastapi.testclient import TestClient
 
 from backend.app.main import app
