@@ -1,7 +1,5 @@
 """Pytest configuration and fixtures."""
 
-import sys
-
 import pytest
 
 
