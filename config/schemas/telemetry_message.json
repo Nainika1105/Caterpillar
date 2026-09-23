@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Machine Telemetry Message",
+  "description": "One-minute telemetry snapshot from a machine's CAN bus and sensors",
+  "type": "object",
+  "required": [
+    "timestamp",
+    "site_id",
+    "machine_id",
+    "operator_id",
+    "task_id",
+    "state",
+    "power_on",
+    "operator_present",
+    "seatbelt_status",
+    "engine_rpm",
+    "ground_speed_kmh",
+    "fuel_level_pct",
+    "battery_soc_pct",
+    "fuel_rate_lph",
+    "power_kw",
+    "energy_used",
+    "hydraulic_pressure_bar",
+    "hydraulic_oil_temp_c",
+    "coolant_temp_c",
+    "load_cycles",
+    "proximity_min_m",
+    "proximity_zone",
+    "harsh_events",
+    "ambient_temp_c",
+    "rain_mm_hr",
+    "engine_hours"
+  ],
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp (1-minute granularity)"
+    },
+    "site_id": {
+      "type": "string",
+      "pattern": "^S[0-9]{2}$",
+      "description": "Site identifier (S01, S02, S03)"
+    },
+    "machine_id": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}[0-9]{3}$",
+      "description": "Machine identifier (BH001, EXC002, etc.)"
+    },
+    "operator_id": {
+      "type": "string",
+      "pattern": "^OP[0-9]{4}$",
+      "description": "Operator identifier"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^T[0-9]{5}$",
+      "description": "Current task identifier or null if idle"
+    },
+    "state": {
+      "type": "string",
+      "enum": ["idle", "working", "traveling", "loading", "unloading"],
+      "description": "Current machine operational state"
+    },
+    "power_on": {
+      "type": "boolean",
+      "description": "Engine/motor power state"
+    },
+    "operator_present": {
+      "type": "boolean",
+      "description": "Operator in seat"
+    },
+    "seatbelt_status": {
+      "type": "string",
+      "enum": ["Fastened", "Unfastened", "Unknown"],
+      "description": "Seatbelt state (safety critical)"
+    },
+    "engine_rpm": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Engine revolutions per minute"
+    },
+    "ground_speed_kmh": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Vehicle speed in km/h"
+    },
+    "fuel_level_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Fuel tank level percentage (null for electric)"
+    },
+    "battery_soc_pct": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Battery state of charge percentage (null for diesel)"
+    },
+    "fuel_rate_lph": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Fuel consumption rate in liters/hour"
+    },
+    "power_kw": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Power output in kilowatts"
+    },
+    "energy_used": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Cumulative energy used in this period (kWh)"
+    },
+    "hydraulic_pressure_bar": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Hydraulic system pressure in bar"
+    },
+    "hydraulic_oil_temp_c": {
+      "type": "number",
+      "description": "Hydraulic oil temperature in Celsius"
+    },
+    "coolant_temp_c": {
+      "type": "number",
+      "description": "Engine coolant temperature in Celsius"
+    },
+    "load_cycles": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of load/unload cycles in this period"
+    },
+    "proximity_min_m": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Nearest object/worker distance in meters (radar/UWB)"
+    },
+    "proximity_zone": {
+      "type": "string",
+      "enum": ["clear", "warning", "critical"],
+      "description": "Proximity alert zone"
+    },
+    "harsh_events": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of harsh acceleration/braking events in this period"
+    },
+    "ambient_temp_c": {
+      "type": "number",
+      "description": "Ambient air temperature in Celsius"
+    },
+    "rain_mm_hr": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Rain rate in mm/hr (weather API data)"
+    },
+    "engine_hours": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Cumulative engine operating hours"
+    },
+    "anomaly_id": {
+      "type": ["string", "null"],
+      "description": "Ground truth anomaly ID (evaluation only, never in training)"
+    },
+    "anomaly_type": {
+      "type": ["string", "null"],
+      "description": "Ground truth anomaly type (evaluation only, never in training)"
+    }
+  }
+}
