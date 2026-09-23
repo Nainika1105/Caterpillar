@@ -1,0 +1,58 @@
+operator_id,course_id,course,category,completed_on,score_pct,valid_until,format
+OP1001,TRN01,Seatbelt and ROPS safety,safety,2023-05-04,97,2026-04-18,instructor-led
+OP1001,TRN02,Proximity and blind-spot awareness,safety,2023-05-11,63,2025-04-30,e-learning
+OP1001,TRN05,Pre-shift inspection,maintenance,2022-11-27,86,,e-learning
+OP1002,TRN01,Seatbelt and ROPS safety,safety,2023-05-15,95,2026-04-29,instructor-led
+OP1002,TRN02,Proximity and blind-spot awareness,safety,2023-08-18,64,2025-08-07,instructor-led
+OP1002,TRN03,Fuel-efficient operation,efficiency,2022-04-04,92,,instructor-led
+OP1002,TRN05,Pre-shift inspection,maintenance,2025-03-18,67,,instructor-led
+OP1003,TRN01,Seatbelt and ROPS safety,safety,2023-07-09,68,2026-06-23,simulator
+OP1003,TRN02,Proximity and blind-spot awareness,safety,2024-04-03,67,2026-03-24,e-learning
+OP1003,TRN03,Fuel-efficient operation,efficiency,2024-08-12,64,,simulator
+OP1003,TRN05,Pre-shift inspection,maintenance,2023-10-06,84,,instructor-led
+OP1004,TRN01,Seatbelt and ROPS safety,safety,2023-09-03,64,2026-08-18,instructor-led
+OP1004,TRN03,Fuel-efficient operation,efficiency,2022-03-16,92,,e-learning
+OP1004,TRN04,EV high-voltage safety,ev,2024-06-24,88,2026-06-14,instructor-led
+OP1004,TRN05,Pre-shift inspection,maintenance,2024-08-03,93,,instructor-led
+OP1005,TRN01,Seatbelt and ROPS safety,safety,2022-04-16,98,2025-03-31,e-learning
+OP1005,TRN02,Proximity and blind-spot awareness,safety,2022-10-02,97,2024-09-21,simulator
+OP1005,TRN04,EV high-voltage safety,ev,2023-03-12,89,2025-03-01,e-learning
+OP1006,TRN01,Seatbelt and ROPS safety,safety,2022-11-08,95,2025-10-23,simulator
+OP1006,TRN02,Proximity and blind-spot awareness,safety,2025-03-01,82,2027-02-19,e-learning
+OP1006,TRN03,Fuel-efficient operation,efficiency,2024-12-13,77,,e-learning
+OP1006,TRN05,Pre-shift inspection,maintenance,2023-06-26,81,,instructor-led
+OP1007,TRN01,Seatbelt and ROPS safety,safety,2021-11-15,69,2024-10-30,instructor-led
+OP1007,TRN02,Proximity and blind-spot awareness,safety,2024-06-25,74,2026-06-15,simulator
+OP1007,TRN03,Fuel-efficient operation,efficiency,2022-09-12,82,,e-learning
+OP1007,TRN05,Pre-shift inspection,maintenance,2023-12-31,87,,e-learning
+OP1008,TRN01,Seatbelt and ROPS safety,safety,2023-06-30,98,2026-06-14,instructor-led
+OP1008,TRN02,Proximity and blind-spot awareness,safety,2024-10-31,63,2026-10-21,e-learning
+OP1008,TRN03,Fuel-efficient operation,efficiency,2023-07-14,73,,e-learning
+OP1009,TRN01,Seatbelt and ROPS safety,safety,2024-10-18,76,2027-10-03,e-learning
+OP1009,TRN02,Proximity and blind-spot awareness,safety,2025-02-07,76,2027-01-28,simulator
+OP1009,TRN03,Fuel-efficient operation,efficiency,2023-07-16,85,,simulator
+OP1009,TRN05,Pre-shift inspection,maintenance,2024-09-26,78,,instructor-led
+OP1010,TRN01,Seatbelt and ROPS safety,safety,2023-12-16,85,2026-11-30,simulator
+OP1010,TRN02,Proximity and blind-spot awareness,safety,2022-06-04,69,2024-05-24,instructor-led
+OP1010,TRN03,Fuel-efficient operation,efficiency,2022-04-17,96,,simulator
+OP1010,TRN05,Pre-shift inspection,maintenance,2023-09-29,75,,simulator
+OP1011,TRN01,Seatbelt and ROPS safety,safety,2024-01-02,76,2026-12-17,instructor-led
+OP1011,TRN02,Proximity and blind-spot awareness,safety,2024-09-17,62,2026-09-07,instructor-led
+OP1011,TRN03,Fuel-efficient operation,efficiency,2023-07-26,82,,simulator
+OP1011,TRN05,Pre-shift inspection,maintenance,2024-04-26,66,,simulator
+OP1012,TRN01,Seatbelt and ROPS safety,safety,2025-02-27,83,2028-02-12,simulator
+OP1012,TRN02,Proximity and blind-spot awareness,safety,2022-10-05,70,2024-09-24,e-learning
+OP1012,TRN05,Pre-shift inspection,maintenance,2023-07-21,72,,instructor-led
+OP1013,TRN01,Seatbelt and ROPS safety,safety,2024-05-01,78,2027-04-16,instructor-led
+OP1013,TRN02,Proximity and blind-spot awareness,safety,2023-10-25,77,2025-10-14,instructor-led
+OP1013,TRN03,Fuel-efficient operation,efficiency,2024-04-07,64,,e-learning
+OP1013,TRN04,EV high-voltage safety,ev,2024-07-26,65,2026-07-16,simulator
+OP1013,TRN05,Pre-shift inspection,maintenance,2023-07-21,92,,e-learning
+OP1014,TRN01,Seatbelt and ROPS safety,safety,2022-02-19,71,2025-02-03,e-learning
+OP1014,TRN03,Fuel-efficient operation,efficiency,2022-07-17,74,,simulator
+OP1014,TRN04,EV high-voltage safety,ev,2024-09-17,69,2026-09-07,instructor-led
+OP1014,TRN05,Pre-shift inspection,maintenance,2022-08-04,70,,instructor-led
+OP1015,TRN01,Seatbelt and ROPS safety,safety,2024-06-08,81,2027-05-24,simulator
+OP1015,TRN02,Proximity and blind-spot awareness,safety,2022-08-31,70,2024-08-20,e-learning
+OP1015,TRN03,Fuel-efficient operation,efficiency,2022-04-12,98,,instructor-led
+OP1015,TRN05,Pre-shift inspection,maintenance,2024-06-18,68,,e-learning

@@ -1,0 +1,249 @@
+anomaly_id,anomaly_type,machine_id,operator_id,site_id,start,end,labelled_minutes,severity,description
+A0001,overheating,EXC001,OP1001,S01,2025-06-02 15:18:00,2025-06-02 16:04:00,46,high,Coolant temperature above safe band on hot day
+A0002,fuel_loss,WL001,OP1007,S01,2025-06-02 12:38:00,2025-06-02 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0003,proximity_breach,WL002,OP1008,S03,2025-06-02 09:42:00,2025-06-02 09:44:00,2,critical,Person/object inside 2 m danger zone while machine moving
+A0004,excessive_idling,BH001,OP1011,S01,2025-06-02 13:24:00,2025-06-02 14:24:00,60,low,Continuous idle block beyond 25 min
+A0005,proximity_breach,BH001,OP1011,S01,2025-06-02 14:24:00,2025-06-02 14:27:00,3,critical,Person/object inside 2 m danger zone while machine moving
+A0006,unbelted_operation,EXC003,OP1003,S02,2025-06-03 15:20:00,2025-06-03 15:47:00,27,high,Machine operated with seatbelt unfastened
+A0008,excessive_idling,EXC005,OP1005,S01,2025-06-03 15:18:00,2025-06-03 16:18:00,60,low,Continuous idle block beyond 25 min
+A0009,unattended_running,WL001,OP1007,S01,2025-06-03 14:46:00,2025-06-03 15:04:00,18,high,Engine running at idle with operator out of seat
+A0011,overheating,EXC001,OP1001,S01,2025-06-04 14:05:00,2025-06-04 15:08:00,63,high,Coolant temperature above safe band on hot day
+A0012,unattended_running,WL001,OP1007,S01,2025-06-04 15:32:00,2025-06-04 15:50:00,18,high,Engine running at idle with operator out of seat
+A0013,proximity_breach,WL001,OP1007,S01,2025-06-04 09:13:00,2025-06-04 09:14:00,1,critical,Person/object inside 2 m danger zone while machine moving
+A0014,overspeed_travel,WL002,OP1008,S03,2025-06-04 13:21:00,2025-06-04 13:23:00,2,medium,Travel speed above 10 km/h site limit
+A0015,unbelted_operation,EXC005,OP1005,S01,2025-06-05 09:36:00,2025-06-05 09:47:00,11,high,Machine operated with seatbelt unfastened
+A0016,unattended_running,EXC006,OP1006,S03,2025-06-05 13:37:00,2025-06-05 14:11:00,34,high,Engine running at idle with operator out of seat
+A0017,excessive_idling,WL001,OP1011,S01,2025-06-05 08:39:00,2025-06-05 09:09:00,30,low,Continuous idle block beyond 25 min
+A0018,harsh_operation,WL002,OP1008,S03,2025-06-05 11:18:00,2025-06-05 11:39:00,12,medium,Abrupt control inputs; hydraulic pressure spikes
+A0019,harsh_operation,EXC003,OP1004,S02,2025-06-06 12:08:00,2025-06-06 12:26:00,13,medium,Abrupt control inputs; hydraulic pressure spikes
+A0020,excessive_idling,WL002,OP1008,S03,2025-06-06 13:34:00,2025-06-06 14:07:00,33,low,Continuous idle block beyond 25 min
+A0021,harsh_operation,DZ001,OP1009,S02,2025-06-06 08:54:00,2025-06-06 09:34:00,31,medium,Abrupt control inputs; hydraulic pressure spikes
+A0022,fuel_loss,DZ002,OP1010,S03,2025-06-06 12:38:00,2025-06-06 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0023,excessive_idling,BH001,OP1011,S01,2025-06-06 16:07:00,2025-06-06 16:58:00,51,low,Continuous idle block beyond 25 min
+A0024,overspeed_travel,EXC004,OP1004,S02,2025-06-07 12:27:00,2025-06-07 12:30:00,3,medium,Travel speed above 10 km/h site limit
+A0025,unbelted_operation,WL001,OP1011,S01,2025-06-07 14:27:00,2025-06-07 14:54:00,27,high,Machine operated with seatbelt unfastened
+A0026,fuel_loss,WL001,OP1011,S01,2025-06-07 12:38:00,2025-06-07 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0027,overspeed_travel,WL002,OP1008,S03,2025-06-07 15:14:00,2025-06-07 15:17:00,3,medium,Travel speed above 10 km/h site limit
+A0028,proximity_breach,DZ001,OP1009,S02,2025-06-07 10:15:00,2025-06-07 10:18:00,3,critical,Person/object inside 2 m danger zone while machine moving
+A0029,harsh_operation,DZ002,OP1010,S03,2025-06-07 14:34:00,2025-06-07 15:06:00,32,medium,Abrupt control inputs; hydraulic pressure spikes
+A0030,excessive_idling,BH001,OP1011,S01,2025-06-07 11:52:00,2025-06-07 12:17:00,25,low,Continuous idle block beyond 25 min
+A0031,unattended_running,EXC003,OP1003,S02,2025-06-09 14:58:00,2025-06-09 15:09:00,11,high,Engine running at idle with operator out of seat
+A0032,harsh_operation,EXC003,OP1003,S02,2025-06-09 12:06:00,2025-06-09 12:28:00,22,medium,Abrupt control inputs; hydraulic pressure spikes
+A0033,proximity_breach,EXC006,OP1015,S03,2025-06-09 14:09:00,2025-06-09 14:10:00,1,critical,Person/object inside 2 m danger zone while machine moving
+A0034,unattended_running,WL001,OP1007,S01,2025-06-09 15:30:00,2025-06-09 15:45:00,15,high,Engine running at idle with operator out of seat
+A0035,unbelted_operation,WL001,OP1007,S01,2025-06-09 14:50:00,2025-06-09 15:06:00,16,high,Machine operated with seatbelt unfastened
+A0036,unattended_running,DZ001,OP1009,S02,2025-06-09 14:02:00,2025-06-09 14:38:00,36,high,Engine running at idle with operator out of seat
+A0037,excessive_idling,BH001,OP1011,S01,2025-06-09 13:45:00,2025-06-09 14:10:00,25,low,Continuous idle block beyond 25 min
+A0038,excessive_idling,EXC001,OP1001,S01,2025-06-10 14:03:00,2025-06-10 14:43:00,40,low,Continuous idle block beyond 25 min
+A0039,unbelted_operation,EXC001,OP1001,S01,2025-06-10 14:42:00,2025-06-10 15:00:00,18,high,Machine operated with seatbelt unfastened
+A0040,unbelted_operation,EXC004,OP1004,S02,2025-06-10 10:06:00,2025-06-10 10:36:00,30,high,Machine operated with seatbelt unfastened
+A0041,harsh_operation,EXC004,OP1004,S02,2025-06-10 13:46:00,2025-06-10 14:19:00,24,medium,Abrupt control inputs; hydraulic pressure spikes
+A0042,proximity_breach,WL001,OP1007,S01,2025-06-10 08:57:00,2025-06-10 09:00:00,3,critical,Person/object inside 2 m danger zone while machine moving
+A0043,unattended_running,EXC001,OP1001,S01,2025-06-11 09:13:00,2025-06-11 09:27:00,14,high,Engine running at idle with operator out of seat
+A0044,fuel_loss,EXC003,OP1003,S02,2025-06-11 12:38:00,2025-06-11 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0045,excessive_idling,EXC006,OP1006,S03,2025-06-11 16:04:00,2025-06-11 16:46:00,42,low,Continuous idle block beyond 25 min
+A0046,harsh_operation,EXC006,OP1006,S03,2025-06-11 14:43:00,2025-06-11 15:27:00,35,medium,Abrupt control inputs; hydraulic pressure spikes
+A0047,abnormal_fuel_burn,BH001,OP1011,S01,2025-06-11 10:53:00,2025-06-11 11:35:00,42,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0048,abnormal_fuel_burn,BH001,OP1011,S01,2025-06-11 08:00:00,2025-06-11 16:50:00,485,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0049,proximity_breach,BH002,OP1012,S02,2025-06-11 13:46:00,2025-06-11 13:49:00,3,critical,Person/object inside 2 m danger zone while machine moving
+A0050,excessive_idling,EXC002,OP1002,S01,2025-06-12 08:33:00,2025-06-12 09:31:00,58,low,Continuous idle block beyond 25 min
+A0052,fuel_loss,WL002,OP1015,S03,2025-06-12 12:38:00,2025-06-12 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0053,harsh_operation,BH002,OP1012,S02,2025-06-12 08:24:00,2025-06-12 08:51:00,22,medium,Abrupt control inputs; hydraulic pressure spikes
+A0054,overheating,EXC001,OP1001,S01,2025-06-13 14:18:00,2025-06-13 15:02:00,44,high,Coolant temperature above safe band on hot day
+A0055,harsh_operation,EXC002,OP1002,S01,2025-06-13 12:15:00,2025-06-13 12:29:00,14,medium,Abrupt control inputs; hydraulic pressure spikes
+A0056,fuel_loss,EXC002,OP1002,S01,2025-06-13 12:38:00,2025-06-13 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0057,unbelted_operation,EXC004,OP1004,S02,2025-06-13 11:23:00,2025-06-13 11:48:00,25,high,Machine operated with seatbelt unfastened
+A0058,unattended_running,EXC006,OP1006,S03,2025-06-13 14:38:00,2025-06-13 15:18:00,40,high,Engine running at idle with operator out of seat
+A0059,unbelted_operation,WL001,OP1007,S01,2025-06-13 15:30:00,2025-06-13 15:43:00,13,high,Machine operated with seatbelt unfastened
+A0060,excessive_idling,BH001,OP1011,S01,2025-06-13 15:02:00,2025-06-13 15:58:00,56,low,Continuous idle block beyond 25 min
+A0061,harsh_operation,BH002,OP1012,S02,2025-06-13 14:48:00,2025-06-13 15:14:00,26,medium,Abrupt control inputs; hydraulic pressure spikes
+A0062,unbelted_operation,EXC001,OP1001,S01,2025-06-14 09:13:00,2025-06-14 09:30:00,17,high,Machine operated with seatbelt unfastened
+A0063,proximity_breach,EXC001,OP1001,S01,2025-06-14 09:07:00,2025-06-14 09:09:00,2,critical,Person/object inside 2 m danger zone while machine moving
+A0064,overheating,EXC001,OP1001,S01,2025-06-14 14:30:00,2025-06-14 15:14:00,44,high,Coolant temperature above safe band on hot day
+A0065,unattended_running,EXC003,OP1003,S02,2025-06-14 09:20:00,2025-06-14 09:38:00,18,high,Engine running at idle with operator out of seat
+A0066,proximity_breach,EXC003,OP1003,S02,2025-06-14 13:33:00,2025-06-14 13:35:00,2,critical,Person/object inside 2 m danger zone while machine moving
+A0068,excessive_idling,BH001,OP1011,S01,2025-06-14 09:36:00,2025-06-14 10:05:00,29,low,Continuous idle block beyond 25 min
+A0069,proximity_breach,BH001,OP1011,S01,2025-06-14 15:44:00,2025-06-14 15:47:00,3,critical,Person/object inside 2 m danger zone while machine moving
+A0070,harsh_operation,EXC002,OP1013,S01,2025-06-16 14:21:00,2025-06-16 15:01:00,38,medium,Abrupt control inputs; hydraulic pressure spikes
+A0071,unattended_running,EXC005,OP1005,S01,2025-06-16 14:15:00,2025-06-16 14:53:00,38,high,Engine running at idle with operator out of seat
+A0072,excessive_idling,BH001,OP1011,S01,2025-06-16 11:26:00,2025-06-16 12:03:00,37,low,Continuous idle block beyond 25 min
+A0073,excessive_idling,BH002,OP1012,S02,2025-06-16 09:26:00,2025-06-16 10:07:00,41,low,Continuous idle block beyond 25 min
+A0074,proximity_breach,BH002,OP1012,S02,2025-06-16 13:30:00,2025-06-16 13:33:00,3,critical,Person/object inside 2 m danger zone while machine moving
+A0075,harsh_operation,EXC004,OP1004,S02,2025-06-17 10:51:00,2025-06-17 11:34:00,30,medium,Abrupt control inputs; hydraulic pressure spikes
+A0076,unbelted_operation,WL001,OP1007,S01,2025-06-17 10:37:00,2025-06-17 10:46:00,9,high,Machine operated with seatbelt unfastened
+A0077,overheating,WL001,OP1007,S01,2025-06-17 13:49:00,2025-06-17 14:40:00,51,high,Coolant temperature above safe band on hot day
+A0078,unbelted_operation,DZ001,OP1009,S02,2025-06-17 13:54:00,2025-06-17 14:10:00,16,high,Machine operated with seatbelt unfastened
+A0079,proximity_breach,DZ002,OP1010,S03,2025-06-17 13:45:00,2025-06-17 13:47:00,2,critical,Person/object inside 2 m danger zone while machine moving
+A0080,excessive_idling,BH001,OP1011,S01,2025-06-17 09:50:00,2025-06-17 10:25:00,35,low,Continuous idle block beyond 25 min
+A0081,proximity_breach,BH001,OP1011,S01,2025-06-17 15:41:00,2025-06-17 15:42:00,1,critical,Person/object inside 2 m danger zone while machine moving
+A0082,unattended_running,BH002,OP1012,S02,2025-06-17 08:57:00,2025-06-17 09:30:00,33,high,Engine running at idle with operator out of seat
+A0083,unattended_running,EXC003,OP1003,S02,2025-06-18 11:08:00,2025-06-18 11:26:00,18,high,Engine running at idle with operator out of seat
+A0084,excessive_idling,EXC004,OP1004,S02,2025-06-18 09:43:00,2025-06-18 10:18:00,35,low,Continuous idle block beyond 25 min
+A0085,proximity_breach,EXC004,OP1004,S02,2025-06-18 14:49:00,2025-06-18 14:52:00,3,critical,Person/object inside 2 m danger zone while machine moving
+A0086,unbelted_operation,EXC006,OP1006,S03,2025-06-18 08:54:00,2025-06-18 09:24:00,30,high,Machine operated with seatbelt unfastened
+A0088,unbelted_operation,WL001,OP1007,S01,2025-06-18 14:48:00,2025-06-18 14:56:00,8,high,Machine operated with seatbelt unfastened
+A0089,fuel_loss,WL002,OP1008,S03,2025-06-18 12:38:00,2025-06-18 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0090,proximity_breach,DZ001,OP1009,S02,2025-06-18 11:00:00,2025-06-18 11:02:00,2,critical,Person/object inside 2 m danger zone while machine moving
+A0091,excessive_idling,BH001,OP1011,S01,2025-06-18 14:41:00,2025-06-18 15:12:00,31,low,Continuous idle block beyond 25 min
+A0092,proximity_breach,EXC001,OP1001,S01,2025-06-19 14:41:00,2025-06-19 14:42:00,1,critical,Person/object inside 2 m danger zone while machine moving
+A0093,harsh_operation,EXC004,OP1004,S02,2025-06-19 11:07:00,2025-06-19 11:35:00,28,medium,Abrupt control inputs; hydraulic pressure spikes
+A0094,unattended_running,WL001,OP1007,S01,2025-06-19 13:48:00,2025-06-19 14:16:00,28,high,Engine running at idle with operator out of seat
+A0095,unattended_running,DZ001,OP1009,S02,2025-06-19 14:20:00,2025-06-19 14:33:00,13,high,Engine running at idle with operator out of seat
+A0096,excessive_idling,BH001,OP1011,S01,2025-06-19 08:57:00,2025-06-19 09:51:00,54,low,Continuous idle block beyond 25 min
+A0097,abnormal_fuel_burn,EXC003,OP1003,S02,2025-06-20 08:00:00,2025-06-20 17:00:00,495,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0098,excessive_idling,BH001,OP1011,S01,2025-06-20 13:15:00,2025-06-20 13:48:00,33,low,Continuous idle block beyond 25 min
+A0100,fuel_loss,EXC001,OP1001,S01,2025-06-21 12:38:00,2025-06-21 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0101,unbelted_operation,EXC002,OP1007,S01,2025-06-21 11:38:00,2025-06-21 11:55:00,17,high,Machine operated with seatbelt unfastened
+A0102,unbelted_operation,WL001,OP1007,S01,2025-06-21 11:51:00,2025-06-21 12:17:00,26,high,Machine operated with seatbelt unfastened
+A0103,excessive_idling,DZ002,OP1010,S03,2025-06-21 10:39:00,2025-06-21 11:23:00,44,low,Continuous idle block beyond 25 min
+A0104,excessive_idling,BH001,OP1011,S01,2025-06-21 11:33:00,2025-06-21 12:22:00,49,low,Continuous idle block beyond 25 min
+A0105,overheating,EXC001,OP1001,S01,2025-06-23 15:10:00,2025-06-23 16:13:00,63,high,Coolant temperature above safe band on hot day
+A0106,harsh_operation,EXC004,OP1004,S02,2025-06-23 15:28:00,2025-06-23 15:53:00,19,medium,Abrupt control inputs; hydraulic pressure spikes
+A0107,unbelted_operation,WL001,OP1007,S01,2025-06-23 09:39:00,2025-06-23 10:04:00,25,high,Machine operated with seatbelt unfastened
+A0108,proximity_breach,WL001,OP1007,S01,2025-06-23 11:35:00,2025-06-23 11:38:00,3,critical,Person/object inside 2 m danger zone while machine moving
+A0109,proximity_breach,DZ002,OP1010,S03,2025-06-23 16:02:00,2025-06-23 16:05:00,3,critical,Person/object inside 2 m danger zone while machine moving
+A0110,excessive_idling,EXC002,OP1001,S01,2025-06-24 10:05:00,2025-06-24 10:59:00,54,low,Continuous idle block beyond 25 min
+A0111,overheating,EXC002,OP1001,S01,2025-06-24 13:32:00,2025-06-24 14:28:00,56,high,Coolant temperature above safe band on hot day
+A0112,harsh_operation,EXC004,OP1004,S02,2025-06-24 14:59:00,2025-06-24 15:30:00,31,medium,Abrupt control inputs; hydraulic pressure spikes
+A0113,unbelted_operation,EXC006,OP1006,S03,2025-06-24 14:50:00,2025-06-24 15:03:00,13,high,Machine operated with seatbelt unfastened
+A0114,excessive_idling,WL002,OP1008,S03,2025-06-24 08:39:00,2025-06-24 09:25:00,46,low,Continuous idle block beyond 25 min
+A0115,harsh_operation,DZ002,OP1010,S03,2025-06-24 15:18:00,2025-06-24 15:51:00,27,medium,Abrupt control inputs; hydraulic pressure spikes
+A0116,fuel_loss,BH002,OP1012,S02,2025-06-24 12:38:00,2025-06-24 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0117,overheating,EXC002,OP1002,S01,2025-06-25 14:56:00,2025-06-25 15:49:00,53,high,Coolant temperature above safe band on hot day
+A0118,unattended_running,EXC004,OP1004,S02,2025-06-25 09:11:00,2025-06-25 09:51:00,40,high,Engine running at idle with operator out of seat
+A0119,harsh_operation,EXC004,OP1004,S02,2025-06-25 14:15:00,2025-06-25 14:54:00,35,medium,Abrupt control inputs; hydraulic pressure spikes
+A0120,excessive_idling,WL001,OP1011,S01,2025-06-25 13:52:00,2025-06-25 14:44:00,52,low,Continuous idle block beyond 25 min
+A0121,overheating,WL001,OP1011,S01,2025-06-25 13:44:00,2025-06-25 14:35:00,51,high,Coolant temperature above safe band on hot day
+A0122,excessive_idling,BH001,OP1011,S01,2025-06-25 15:55:00,2025-06-25 16:49:00,54,low,Continuous idle block beyond 25 min
+A0123,proximity_breach,EXC004,OP1004,S02,2025-06-26 10:16:00,2025-06-26 10:17:00,1,critical,Person/object inside 2 m danger zone while machine moving
+A0124,harsh_operation,EXC004,OP1004,S02,2025-06-26 14:55:00,2025-06-26 15:17:00,17,medium,Abrupt control inputs; hydraulic pressure spikes
+A0125,excessive_idling,EXC005,OP1005,S01,2025-06-26 09:27:00,2025-06-26 10:01:00,34,low,Continuous idle block beyond 25 min
+A0126,overheating,WL001,OP1005,S01,2025-06-26 13:51:00,2025-06-26 14:50:00,59,high,Coolant temperature above safe band on hot day
+A0127,fuel_loss,WL002,OP1008,S03,2025-06-26 12:38:00,2025-06-26 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0128,unattended_running,BH001,OP1011,S01,2025-06-26 10:29:00,2025-06-26 11:03:00,34,high,Engine running at idle with operator out of seat
+A0129,overspeed_travel,EXC001,OP1001,S01,2025-06-27 14:32:00,2025-06-27 14:34:00,2,medium,Travel speed above 10 km/h site limit
+A0130,excessive_idling,EXC006,OP1006,S03,2025-06-27 09:42:00,2025-06-27 10:32:00,50,low,Continuous idle block beyond 25 min
+A0131,fuel_loss,EXC002,OP1002,S01,2025-06-28 12:38:00,2025-06-28 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0132,overspeed_travel,EXC003,OP1003,S02,2025-06-28 11:49:00,2025-06-28 11:52:00,3,medium,Travel speed above 10 km/h site limit
+A0133,harsh_operation,EXC004,OP1004,S02,2025-06-28 15:12:00,2025-06-28 15:20:00,8,medium,Abrupt control inputs; hydraulic pressure spikes
+A0134,unbelted_operation,EXC006,OP1006,S03,2025-06-28 15:29:00,2025-06-28 15:43:00,14,high,Machine operated with seatbelt unfastened
+A0135,unbelted_operation,WL001,OP1007,S01,2025-06-28 10:46:00,2025-06-28 11:07:00,21,high,Machine operated with seatbelt unfastened
+A0136,abnormal_fuel_burn,WL002,OP1008,S03,2025-06-28 08:00:00,2025-06-28 15:42:00,417,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0137,unattended_running,DZ001,OP1009,S02,2025-06-28 14:56:00,2025-06-28 15:31:00,35,high,Engine running at idle with operator out of seat
+A0138,excessive_idling,EXC004,OP1004,S02,2025-06-30 09:02:00,2025-06-30 09:36:00,34,low,Continuous idle block beyond 25 min
+A0139,excessive_idling,EXC005,OP1005,S01,2025-06-30 13:41:00,2025-06-30 14:28:00,47,low,Continuous idle block beyond 25 min
+A0140,overspeed_travel,DZ001,OP1009,S02,2025-06-30 11:14:00,2025-06-30 11:16:00,2,medium,Travel speed above 10 km/h site limit
+A0141,excessive_idling,EXC004,OP1004,S02,2025-07-01 13:52:00,2025-07-01 14:50:00,58,low,Continuous idle block beyond 25 min
+A0142,unbelted_operation,EXC004,OP1004,S02,2025-07-01 14:52:00,2025-07-01 15:00:00,8,high,Machine operated with seatbelt unfastened
+A0143,harsh_operation,EXC004,OP1004,S02,2025-07-01 11:00:00,2025-07-01 11:35:00,30,medium,Abrupt control inputs; hydraulic pressure spikes
+A0144,excessive_idling,BH002,OP1012,S02,2025-07-01 09:02:00,2025-07-01 09:42:00,40,low,Continuous idle block beyond 25 min
+A0145,unattended_running,EXC004,OP1004,S02,2025-07-02 08:24:00,2025-07-02 09:03:00,39,high,Engine running at idle with operator out of seat
+A0146,proximity_breach,EXC004,OP1004,S02,2025-07-02 13:56:00,2025-07-02 13:59:00,3,critical,Person/object inside 2 m danger zone while machine moving
+A0147,harsh_operation,EXC004,OP1004,S02,2025-07-02 16:56:00,2025-07-02 17:00:00,4,medium,Abrupt control inputs; hydraulic pressure spikes
+A0148,excessive_idling,EXC005,OP1005,S01,2025-07-02 09:36:00,2025-07-02 10:30:00,54,low,Continuous idle block beyond 25 min
+A0149,unattended_running,WL001,OP1007,S01,2025-07-02 11:34:00,2025-07-02 12:23:00,34,high,Engine running at idle with operator out of seat
+A0150,unbelted_operation,EXC003,OP1003,S02,2025-07-03 10:04:00,2025-07-03 10:16:00,12,high,Machine operated with seatbelt unfastened
+A0151,proximity_breach,EXC004,OP1014,S02,2025-07-03 10:35:00,2025-07-03 10:38:00,3,critical,Person/object inside 2 m danger zone while machine moving
+A0152,excessive_idling,WL001,OP1007,S01,2025-07-03 14:17:00,2025-07-03 14:56:00,39,low,Continuous idle block beyond 25 min
+A0153,overheating,WL001,OP1007,S01,2025-07-03 14:06:00,2025-07-03 15:00:00,54,high,Coolant temperature above safe band on hot day
+A0154,proximity_breach,DZ001,OP1009,S02,2025-07-03 11:50:00,2025-07-03 11:53:00,3,critical,Person/object inside 2 m danger zone while machine moving
+A0155,unbelted_operation,WL001,OP1007,S01,2025-07-04 10:45:00,2025-07-04 11:12:00,27,high,Machine operated with seatbelt unfastened
+A0156,abnormal_fuel_burn,DZ001,OP1009,S02,2025-07-04 08:00:00,2025-07-04 14:38:00,353,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0157,abnormal_fuel_burn,BH001,OP1011,S01,2025-07-04 09:29:00,2025-07-04 10:29:00,60,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0158,abnormal_fuel_burn,BH001,OP1011,S01,2025-07-04 08:00:00,2025-07-04 15:55:00,430,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0159,excessive_idling,EXC003,OP1004,S02,2025-07-05 13:15:00,2025-07-05 14:00:00,45,low,Continuous idle block beyond 25 min
+A0160,harsh_operation,EXC003,OP1004,S02,2025-07-05 08:43:00,2025-07-05 09:05:00,22,medium,Abrupt control inputs; hydraulic pressure spikes
+A0161,excessive_idling,BH001,OP1011,S01,2025-07-05 14:58:00,2025-07-05 15:41:00,43,low,Continuous idle block beyond 25 min
+A0162,unbelted_operation,BH001,OP1011,S01,2025-07-05 15:01:00,2025-07-05 15:14:00,13,high,Machine operated with seatbelt unfastened
+A0163,excessive_idling,EXC003,OP1003,S02,2025-07-07 15:20:00,2025-07-07 16:13:00,53,low,Continuous idle block beyond 25 min
+A0164,harsh_operation,EXC003,OP1003,S02,2025-07-07 16:14:00,2025-07-07 16:52:00,35,medium,Abrupt control inputs; hydraulic pressure spikes
+A0165,overspeed_travel,EXC004,OP1004,S02,2025-07-07 12:08:00,2025-07-07 12:11:00,3,medium,Travel speed above 10 km/h site limit
+A0167,harsh_operation,EXC006,OP1006,S03,2025-07-07 09:45:00,2025-07-07 10:12:00,22,medium,Abrupt control inputs; hydraulic pressure spikes
+A0168,unbelted_operation,WL001,OP1007,S01,2025-07-07 15:42:00,2025-07-07 15:51:00,9,high,Machine operated with seatbelt unfastened
+A0169,proximity_breach,BH002,OP1012,S02,2025-07-07 11:07:00,2025-07-07 11:10:00,3,critical,Person/object inside 2 m danger zone while machine moving
+A0170,overspeed_travel,EXC002,OP1002,S01,2025-07-08 10:09:00,2025-07-08 10:12:00,3,medium,Travel speed above 10 km/h site limit
+A0171,unattended_running,EXC003,OP1003,S02,2025-07-08 14:20:00,2025-07-08 14:42:00,22,high,Engine running at idle with operator out of seat
+A0172,excessive_idling,EXC006,OP1006,S03,2025-07-08 10:33:00,2025-07-08 11:00:00,27,low,Continuous idle block beyond 25 min
+A0173,unattended_running,WL001,OP1007,S01,2025-07-08 10:33:00,2025-07-08 11:03:00,30,high,Engine running at idle with operator out of seat
+A0174,proximity_breach,DZ002,OP1010,S03,2025-07-08 11:23:00,2025-07-08 11:25:00,2,critical,Person/object inside 2 m danger zone while machine moving
+A0175,excessive_idling,BH001,OP1011,S01,2025-07-08 13:25:00,2025-07-08 13:56:00,31,low,Continuous idle block beyond 25 min
+A0176,unbelted_operation,EXC003,OP1003,S02,2025-07-09 10:59:00,2025-07-09 11:26:00,27,high,Machine operated with seatbelt unfastened
+A0177,overspeed_travel,EXC004,OP1004,S02,2025-07-09 10:56:00,2025-07-09 10:59:00,3,medium,Travel speed above 10 km/h site limit
+A0178,unbelted_operation,EXC006,OP1006,S03,2025-07-09 15:13:00,2025-07-09 15:41:00,28,high,Machine operated with seatbelt unfastened
+A0179,unbelted_operation,WL001,OP1007,S01,2025-07-09 13:54:00,2025-07-09 14:20:00,26,high,Machine operated with seatbelt unfastened
+A0180,fuel_loss,WL001,OP1007,S01,2025-07-09 12:38:00,2025-07-09 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0181,abnormal_fuel_burn,WL002,OP1015,S03,2025-07-09 08:00:00,2025-07-09 17:00:00,495,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0182,excessive_idling,BH001,OP1011,S01,2025-07-09 15:33:00,2025-07-09 16:12:00,39,low,Continuous idle block beyond 25 min
+A0183,overspeed_travel,EXC001,OP1001,S01,2025-07-10 12:06:00,2025-07-10 12:09:00,3,medium,Travel speed above 10 km/h site limit
+A0184,overheating,EXC002,OP1002,S01,2025-07-10 15:07:00,2025-07-10 15:42:00,35,high,Coolant temperature above safe band on hot day
+A0185,harsh_operation,EXC005,OP1005,S01,2025-07-10 08:21:00,2025-07-10 08:50:00,29,medium,Abrupt control inputs; hydraulic pressure spikes
+A0186,unattended_running,BH001,OP1011,S01,2025-07-10 11:44:00,2025-07-10 12:00:00,16,high,Engine running at idle with operator out of seat
+A0187,harsh_operation,EXC001,OP1001,S01,2025-07-11 11:22:00,2025-07-11 12:01:00,32,medium,Abrupt control inputs; hydraulic pressure spikes
+A0188,overspeed_travel,DZ001,OP1009,S02,2025-07-11 15:04:00,2025-07-11 15:06:00,2,medium,Travel speed above 10 km/h site limit
+A0189,unattended_running,DZ002,OP1010,S03,2025-07-11 15:09:00,2025-07-11 15:28:00,19,high,Engine running at idle with operator out of seat
+A0190,excessive_idling,BH001,OP1011,S01,2025-07-11 09:55:00,2025-07-11 10:41:00,46,low,Continuous idle block beyond 25 min
+A0191,unbelted_operation,EXC002,OP1002,S01,2025-07-12 15:52:00,2025-07-12 16:25:00,33,high,Machine operated with seatbelt unfastened
+A0192,proximity_breach,EXC002,OP1002,S01,2025-07-12 14:57:00,2025-07-12 14:59:00,2,critical,Person/object inside 2 m danger zone while machine moving
+A0193,proximity_breach,EXC003,OP1003,S02,2025-07-12 11:36:00,2025-07-12 11:37:00,1,critical,Person/object inside 2 m danger zone while machine moving
+A0194,excessive_idling,WL002,OP1008,S03,2025-07-12 15:49:00,2025-07-12 16:44:00,55,low,Continuous idle block beyond 25 min
+A0195,excessive_idling,DZ001,OP1009,S02,2025-07-12 14:35:00,2025-07-12 15:29:00,54,low,Continuous idle block beyond 25 min
+A0196,fuel_loss,BH002,OP1012,S02,2025-07-12 12:38:00,2025-07-12 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0197,unattended_running,EXC004,OP1004,S02,2025-07-14 16:08:00,2025-07-14 16:37:00,29,high,Engine running at idle with operator out of seat
+A0199,proximity_breach,EXC006,OP1006,S03,2025-07-15 09:11:00,2025-07-15 09:13:00,2,critical,Person/object inside 2 m danger zone while machine moving
+A0200,abnormal_fuel_burn,WL001,OP1007,S01,2025-07-15 14:26:00,2025-07-15 14:49:00,23,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0201,abnormal_fuel_burn,WL001,OP1007,S01,2025-07-15 08:00:00,2025-07-15 17:00:00,495,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0202,excessive_idling,DZ001,OP1009,S02,2025-07-15 15:40:00,2025-07-15 16:06:00,26,low,Continuous idle block beyond 25 min
+A0203,overspeed_travel,DZ001,OP1009,S02,2025-07-15 14:36:00,2025-07-15 14:40:00,4,medium,Travel speed above 10 km/h site limit
+A0204,unattended_running,BH002,OP1012,S02,2025-07-15 13:29:00,2025-07-15 13:42:00,13,high,Engine running at idle with operator out of seat
+A0205,unattended_running,EXC001,OP1001,S01,2025-07-16 11:26:00,2025-07-16 11:54:00,28,high,Engine running at idle with operator out of seat
+A0206,proximity_breach,EXC004,OP1014,S02,2025-07-16 15:26:00,2025-07-16 15:27:00,1,critical,Person/object inside 2 m danger zone while machine moving
+A0207,excessive_idling,WL001,OP1011,S01,2025-07-16 08:43:00,2025-07-16 09:23:00,40,low,Continuous idle block beyond 25 min
+A0208,excessive_idling,BH001,OP1011,S01,2025-07-16 08:53:00,2025-07-16 09:27:00,34,low,Continuous idle block beyond 25 min
+A0209,fuel_loss,EXC001,OP1001,S01,2025-07-17 12:38:00,2025-07-17 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0210,abnormal_fuel_burn,EXC001,OP1001,S01,2025-07-17 08:00:00,2025-07-17 17:00:00,487,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0211,fuel_loss,EXC006,OP1006,S03,2025-07-17 12:38:00,2025-07-17 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0212,harsh_operation,EXC004,OP1004,S02,2025-07-18 16:02:00,2025-07-18 16:32:00,18,medium,Abrupt control inputs; hydraulic pressure spikes
+A0213,harsh_operation,EXC006,OP1006,S03,2025-07-18 13:37:00,2025-07-18 14:17:00,36,medium,Abrupt control inputs; hydraulic pressure spikes
+A0214,excessive_idling,EXC003,OP1003,S02,2025-07-19 13:24:00,2025-07-19 14:15:00,51,low,Continuous idle block beyond 25 min
+A0215,excessive_idling,EXC004,OP1004,S02,2025-07-19 09:50:00,2025-07-19 10:17:00,27,low,Continuous idle block beyond 25 min
+A0216,proximity_breach,EXC005,OP1013,S01,2025-07-19 14:09:00,2025-07-19 14:10:00,1,critical,Person/object inside 2 m danger zone while machine moving
+A0218,overheating,EXC002,OP1002,S01,2025-07-21 14:07:00,2025-07-21 14:53:00,46,high,Coolant temperature above safe band on hot day
+A0219,harsh_operation,EXC005,OP1005,S01,2025-07-21 15:02:00,2025-07-21 15:05:00,3,medium,Abrupt control inputs; hydraulic pressure spikes
+A0220,harsh_operation,EXC005,OP1005,S01,2025-07-21 14:48:00,2025-07-21 15:18:00,30,medium,Abrupt control inputs; hydraulic pressure spikes
+A0221,unattended_running,WL001,OP1007,S01,2025-07-21 15:01:00,2025-07-21 15:37:00,36,high,Engine running at idle with operator out of seat
+A0222,unattended_running,DZ002,OP1010,S03,2025-07-21 11:13:00,2025-07-21 11:48:00,35,high,Engine running at idle with operator out of seat
+A0224,excessive_idling,EXC001,OP1001,S01,2025-07-22 16:14:00,2025-07-22 16:43:00,29,low,Continuous idle block beyond 25 min
+A0225,excessive_idling,EXC002,OP1002,S01,2025-07-22 10:12:00,2025-07-22 10:41:00,29,low,Continuous idle block beyond 25 min
+A0226,overspeed_travel,EXC004,OP1004,S02,2025-07-22 16:10:00,2025-07-22 16:12:00,2,medium,Travel speed above 10 km/h site limit
+A0227,unattended_running,EXC005,OP1005,S01,2025-07-22 10:01:00,2025-07-22 10:26:00,25,high,Engine running at idle with operator out of seat
+A0228,excessive_idling,EXC002,OP1002,S01,2025-07-23 10:14:00,2025-07-23 10:43:00,29,low,Continuous idle block beyond 25 min
+A0229,overspeed_travel,EXC004,OP1004,S02,2025-07-23 13:52:00,2025-07-23 13:55:00,3,medium,Travel speed above 10 km/h site limit
+A0230,abnormal_fuel_burn,WL001,OP1007,S01,2025-07-23 09:44:00,2025-07-23 10:15:00,31,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0231,fuel_loss,WL001,OP1007,S01,2025-07-23 12:38:00,2025-07-23 12:43:00,5,high,Fuel level drop while engine off (leak or theft)
+A0232,abnormal_fuel_burn,WL001,OP1007,S01,2025-07-23 08:00:00,2025-07-23 17:00:00,487,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0233,unbelted_operation,WL002,OP1008,S03,2025-07-23 15:22:00,2025-07-23 15:34:00,12,high,Machine operated with seatbelt unfastened
+A0234,excessive_idling,BH001,OP1011,S01,2025-07-23 09:47:00,2025-07-23 10:31:00,44,low,Continuous idle block beyond 25 min
+A0235,proximity_breach,EXC002,OP1002,S01,2025-07-24 12:09:00,2025-07-24 12:11:00,2,critical,Person/object inside 2 m danger zone while machine moving
+A0236,overspeed_travel,EXC004,OP1004,S02,2025-07-24 16:45:00,2025-07-24 16:47:00,2,medium,Travel speed above 10 km/h site limit
+A0237,unbelted_operation,WL001,OP1007,S01,2025-07-24 11:43:00,2025-07-24 11:55:00,12,high,Machine operated with seatbelt unfastened
+A0238,overspeed_travel,WL001,OP1007,S01,2025-07-24 12:28:00,2025-07-24 12:30:00,2,medium,Travel speed above 10 km/h site limit
+A0240,proximity_breach,EXC001,OP1001,S01,2025-07-25 09:35:00,2025-07-25 09:36:00,1,critical,Person/object inside 2 m danger zone while machine moving
+A0241,harsh_operation,WL001,OP1007,S01,2025-07-25 11:34:00,2025-07-25 12:05:00,23,medium,Abrupt control inputs; hydraulic pressure spikes
+A0242,excessive_idling,BH001,OP1011,S01,2025-07-25 15:03:00,2025-07-25 15:30:00,27,low,Continuous idle block beyond 25 min
+A0243,unbelted_operation,EXC001,OP1001,S01,2025-07-26 11:48:00,2025-07-26 12:07:00,19,high,Machine operated with seatbelt unfastened
+A0244,harsh_operation,EXC001,OP1001,S01,2025-07-26 14:13:00,2025-07-26 14:39:00,22,medium,Abrupt control inputs; hydraulic pressure spikes
+A0245,abnormal_fuel_burn,EXC002,OP1002,S01,2025-07-26 08:00:00,2025-07-26 16:06:00,441,medium,Fuel consumption 28-42% above class norm for whole shift (e.g. clogged filter)
+A0246,unattended_running,EXC001,OP1005,S01,2025-07-28 10:20:00,2025-07-28 10:45:00,25,high,Engine running at idle with operator out of seat
+A0247,overspeed_travel,EXC004,OP1004,S02,2025-07-28 11:07:00,2025-07-28 11:11:00,4,medium,Travel speed above 10 km/h site limit
+A0248,excessive_idling,WL002,OP1008,S03,2025-07-28 10:31:00,2025-07-28 11:07:00,36,low,Continuous idle block beyond 25 min
+A0249,harsh_operation,WL002,OP1008,S03,2025-07-28 16:00:00,2025-07-28 16:43:00,37,medium,Abrupt control inputs; hydraulic pressure spikes
+A0250,overspeed_travel,BH002,OP1012,S02,2025-07-28 10:11:00,2025-07-28 10:14:00,3,medium,Travel speed above 10 km/h site limit
+A0251,proximity_breach,EXC004,OP1004,S02,2025-07-29 14:47:00,2025-07-29 14:48:00,1,critical,Person/object inside 2 m danger zone while machine moving
+A0252,unattended_running,EXC005,OP1005,S01,2025-07-29 09:59:00,2025-07-29 10:19:00,20,high,Engine running at idle with operator out of seat
+A0253,excessive_idling,EXC006,OP1006,S03,2025-07-29 15:00:00,2025-07-29 15:47:00,47,low,Continuous idle block beyond 25 min
+A0254,harsh_operation,DZ002,OP1010,S03,2025-07-29 14:45:00,2025-07-29 15:07:00,22,medium,Abrupt control inputs; hydraulic pressure spikes
+A0255,overheating,EXC002,OP1002,S01,2025-07-30 14:18:00,2025-07-30 15:03:00,45,high,Coolant temperature above safe band on hot day
+A0257,unattended_running,WL001,OP1005,S01,2025-07-30 10:11:00,2025-07-30 10:27:00,16,high,Engine running at idle with operator out of seat
+A0258,proximity_breach,DZ001,OP1009,S02,2025-07-30 14:54:00,2025-07-30 14:55:00,1,critical,Person/object inside 2 m danger zone while machine moving
+A0259,harsh_operation,DZ002,OP1010,S03,2025-07-30 15:32:00,2025-07-30 16:10:00,31,medium,Abrupt control inputs; hydraulic pressure spikes
+A0260,excessive_idling,BH001,OP1011,S01,2025-07-30 11:54:00,2025-07-30 12:23:00,29,low,Continuous idle block beyond 25 min

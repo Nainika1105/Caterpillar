@@ -1,0 +1,2206 @@
+{
+  "created_at": "2026-09-23T09:15:15.377668+00:00",
+  "total": 60,
+  "passed": 56,
+  "failed": 4,
+  "readiness": "PARTIALLY READY",
+  "summary": [
+    {
+      "module": "Anomaly Detection",
+      "passed": 9,
+      "failed": 0,
+      "status": "PASS"
+    },
+    {
+      "module": "Task Time Estimator",
+      "passed": 10,
+      "failed": 0,
+      "status": "PASS"
+    },
+    {
+      "module": "Energy Model",
+      "passed": 8,
+      "failed": 0,
+      "status": "PASS"
+    },
+    {
+      "module": "Task Matcher",
+      "passed": 10,
+      "failed": 0,
+      "status": "PASS"
+    },
+    {
+      "module": "Operator Analytics",
+      "passed": 7,
+      "failed": 0,
+      "status": "PASS"
+    },
+    {
+      "module": "Feature Pipeline",
+      "passed": 6,
+      "failed": 0,
+      "status": "PASS"
+    },
+    {
+      "module": "Model Persistence",
+      "passed": 4,
+      "failed": 0,
+      "status": "PASS"
+    },
+    {
+      "module": "Integration",
+      "passed": 2,
+      "failed": 3,
+      "status": "FAIL"
+    },
+    {
+      "module": "End-to-End",
+      "passed": 0,
+      "failed": 1,
+      "status": "FAIL"
+    }
+  ],
+  "tests": [
+    {
+      "test_id": "AD-01",
+      "module": "Anomaly Detection",
+      "input": "v1 dozer: idle_pct=12, fuel_per_load_cycle_l=7.8, harsh_events_count=1; other inputs=class medians (dozer baseline 7.67 L/cycle)",
+      "expected": "anomaly=false",
+      "actual": {
+        "v1": {
+          "anomaly": false,
+          "score": 0.39577196361266065,
+          "threshold": 0.4345103696498694,
+          "features": {
+            "idle_pct": 12.0,
+            "unbelted_moving_pct": 0.0,
+            "unattended_pct": 0.0,
+            "proximity_min_m": 2.5,
+            "ground_speed_kmh": 7.8,
+            "coolant_temp_c": 88.0,
+            "harsh_events_count": 1,
+            "fuel_rate_lph": 14.804768518518518,
+            "power_kw": null,
+            "fuel_per_load_cycle_l": 7.8,
+            "energy_per_load_cycle_kwh": 0.0,
+            "machine_class": "dozer"
+          }
+        },
+        "v2_fuel_control": {
+          "machine_id": "EXC002",
+          "operator_id": "OP1002",
+          "date": "2025-08-01",
+          "anomaly_types": [],
+          "fuel_burn_score": 0.0,
+          "fuel_burn_ratio": 1.0,
+          "parked_fuel_drop_pct": 0.0,
+          "has_sufficient_fuel_observations": true,
+          "model_version": "v2"
+        }
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/training/train.py",
+        "function": "train_anomaly",
+        "line": 160
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "AD-02",
+      "module": "Anomaly Detection",
+      "input": "v1 idle_pct=70; other fields fixed to AD-01",
+      "expected": "Anomaly or score rises by at least 0.02 (audit operationalization of clearly elevated)",
+      "actual": {
+        "anomaly": true,
+        "score": 0.44524009087384175,
+        "threshold": 0.4345103696498694,
+        "features": {
+          "idle_pct": 70,
+          "unbelted_moving_pct": 0.0,
+          "unattended_pct": 0.0,
+          "proximity_min_m": 2.5,
+          "ground_speed_kmh": 7.8,
+          "coolant_temp_c": 88.0,
+          "harsh_events_count": 1,
+          "fuel_rate_lph": 14.804768518518518,
+          "power_kw": null,
+          "fuel_per_load_cycle_l": 7.8,
+          "energy_per_load_cycle_kwh": 0.0,
+          "machine_class": "dozer"
+        }
+      },
+      "status": "PASS",
+      "issue": "v1 general detector tested; v2 is fuel-specific and does not detect idling.",
+      "responsible": {
+        "file": "ml/training/train.py",
+        "function": "train_anomaly",
+        "line": 160
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "AD-03",
+      "module": "Anomaly Detection",
+      "input": "v2 normalized telemetry: fuel_rate_lph and fuel_used_l=2.5× learned class/state baseline; same work and cycles",
+      "expected": "abnormal_fuel_burn detected",
+      "actual": {
+        "machine_id": "EXC002",
+        "operator_id": "OP1002",
+        "date": "2025-08-01",
+        "anomaly_types": [
+          "abnormal_fuel_burn"
+        ],
+        "fuel_burn_score": 0.8556701637339579,
+        "fuel_burn_ratio": 2.4999999999999996,
+        "parked_fuel_drop_pct": 0.0,
+        "has_sufficient_fuel_observations": true,
+        "model_version": "v2"
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/anomaly.py",
+        "function": "predict_fuel",
+        "line": 112
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "AD-04",
+      "module": "Anomaly Detection",
+      "input": "v1 harsh_events_count=200; idle_pct=12; fuel_per_load_cycle_l=8.58",
+      "expected": "anomaly=true",
+      "actual": {
+        "anomaly": true,
+        "score": 0.4794529118569648,
+        "threshold": 0.4345103696498694,
+        "features": {
+          "idle_pct": 12.0,
+          "unbelted_moving_pct": 0.0,
+          "unattended_pct": 0.0,
+          "proximity_min_m": 2.5,
+          "ground_speed_kmh": 7.8,
+          "coolant_temp_c": 88.0,
+          "harsh_events_count": 200,
+          "fuel_rate_lph": 14.804768518518518,
+          "power_kw": null,
+          "fuel_per_load_cycle_l": 8.58,
+          "energy_per_load_cycle_kwh": 0.0,
+          "machine_class": "dozer"
+        }
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/training/train.py",
+        "function": "train_anomaly",
+        "line": 160
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "AD-05",
+      "module": "Anomaly Detection",
+      "input": "v1 idle_pct 12/14/16; fuel_per_load_cycle_l 7.8/8.0/8.2; harsh count 1",
+      "expected": "Not every small deviation is flagged",
+      "actual": [
+        {
+          "anomaly": false,
+          "score": 0.39577196361266065,
+          "threshold": 0.4345103696498694,
+          "features": {
+            "idle_pct": 12,
+            "unbelted_moving_pct": 0.0,
+            "unattended_pct": 0.0,
+            "proximity_min_m": 2.5,
+            "ground_speed_kmh": 7.8,
+            "coolant_temp_c": 88.0,
+            "harsh_events_count": 1,
+            "fuel_rate_lph": 14.804768518518518,
+            "power_kw": null,
+            "fuel_per_load_cycle_l": 7.8,
+            "energy_per_load_cycle_kwh": 0.0,
+            "machine_class": "dozer"
+          }
+        },
+        {
+          "anomaly": false,
+          "score": 0.3878935949852402,
+          "threshold": 0.4345103696498694,
+          "features": {
+            "idle_pct": 14,
+            "unbelted_moving_pct": 0.0,
+            "unattended_pct": 0.0,
+            "proximity_min_m": 2.5,
+            "ground_speed_kmh": 7.8,
+            "coolant_temp_c": 88.0,
+            "harsh_events_count": 1,
+            "fuel_rate_lph": 14.804768518518518,
+            "power_kw": null,
+            "fuel_per_load_cycle_l": 8.0,
+            "energy_per_load_cycle_kwh": 0.0,
+            "machine_class": "dozer"
+          }
+        },
+        {
+          "anomaly": false,
+          "score": 0.3889540247937922,
+          "threshold": 0.4345103696498694,
+          "features": {
+            "idle_pct": 16,
+            "unbelted_moving_pct": 0.0,
+            "unattended_pct": 0.0,
+            "proximity_min_m": 2.5,
+            "ground_speed_kmh": 7.8,
+            "coolant_temp_c": 88.0,
+            "harsh_events_count": 1,
+            "fuel_rate_lph": 14.804768518518518,
+            "power_kw": null,
+            "fuel_per_load_cycle_l": 8.2,
+            "energy_per_load_cycle_kwh": 0.0,
+            "machine_class": "dozer"
+          }
+        }
+      ],
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/training/train.py",
+        "function": "train_anomaly",
+        "line": 160
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "AD-06",
+      "module": "Anomaly Detection",
+      "input": "Remove raw fuel_used_l; additionally set engineered fuel_per_load_cycle_l=NaN",
+      "expected": "Imputation or a clear ValueError/ValidationError at inference boundary",
+      "actual": {
+        "omitted_raw_input": {
+          "exception": "ValueError",
+          "message": "Missing required anomaly telemetry columns: fuel_used_l"
+        },
+        "NaN_engineered_feature": {
+          "anomaly": false,
+          "score": 0.38794920649718334,
+          "threshold": 0.4345103696498694,
+          "features": {
+            "idle_pct": 12.0,
+            "unbelted_moving_pct": 0.0,
+            "unattended_pct": 0.0,
+            "proximity_min_m": 2.5,
+            "ground_speed_kmh": 7.8,
+            "coolant_temp_c": 88.0,
+            "harsh_events_count": 1,
+            "fuel_rate_lph": 14.804768518518518,
+            "power_kw": null,
+            "fuel_per_load_cycle_l": null,
+            "energy_per_load_cycle_kwh": 0.0,
+            "machine_class": "dozer"
+          }
+        }
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "ModelService.detect_anomalies",
+        "line": 54
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "AD-07",
+      "module": "Anomaly Detection",
+      "input": "fuel_per_load_cycle_l=99999 across all five supported diesel machine classes; other fields are class medians, idle_pct=12 and harsh_events_count=1",
+      "expected": "Reject or flag extreme input for every class",
+      "actual": [
+        {
+          "machine_class": "excavator",
+          "fuel_per_load_cycle_l": 99999,
+          "rejected": "Anomaly features outside the supported training range: fuel_per_load_cycle_l"
+        },
+        {
+          "machine_class": "mini_excavator",
+          "fuel_per_load_cycle_l": 99999,
+          "rejected": "Anomaly features outside the supported training range: fuel_per_load_cycle_l"
+        },
+        {
+          "machine_class": "dozer",
+          "fuel_per_load_cycle_l": 99999,
+          "rejected": "Anomaly features outside the supported training range: fuel_per_load_cycle_l"
+        },
+        {
+          "machine_class": "wheel_loader",
+          "fuel_per_load_cycle_l": 99999,
+          "rejected": "Anomaly features outside the supported training range: fuel_per_load_cycle_l"
+        },
+        {
+          "machine_class": "backhoe_loader",
+          "fuel_per_load_cycle_l": 99999,
+          "rejected": "Anomaly features outside the supported training range: fuel_per_load_cycle_l"
+        }
+      ],
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "ModelService.score_shift_features",
+        "line": 98
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "AD-08",
+      "module": "Anomaly Detection",
+      "input": "Inspect persisted feature_names; inject all three forbidden label columns",
+      "expected": "No label features and unchanged predictions",
+      "actual": {
+        "feature_names": [
+          "coolant_temp_c",
+          "energy_per_load_cycle_kwh",
+          "experience_years",
+          "fuel_burn_ratio",
+          "fuel_per_load_cycle_l",
+          "fuel_rate_lph",
+          "ground_condition",
+          "ground_speed_kmh",
+          "harsh_events_count",
+          "idle_pct",
+          "machine_class",
+          "machine_state",
+          "planned_duration_min",
+          "power_kw",
+          "proximity_min_m",
+          "quantity",
+          "rain_prev_24h_mm",
+          "recent_15min_used_pct",
+          "recent_used_pct",
+          "task_type",
+          "unattended_pct",
+          "unbelted_moving_pct",
+          "unit",
+          "utc_minute",
+          "working_pct"
+        ],
+        "forbidden_intersection": [],
+        "perturbation_unchanged": true
+      },
+      "status": "PASS",
+      "issue": "Labels are used for validation calibration/evaluation only, not feature inputs.",
+      "responsible": {
+        "file": "ml/anomaly.py",
+        "function": "fit_fuel_model",
+        "line": 69
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "AD-09",
+      "module": "Anomaly Detection",
+      "input": "Recompute v1 May24–30 and v2 June1–July30 predictions vs ground-truth CSVs",
+      "expected": "Return precision, recall, F1 and confusion matrices",
+      "actual": {
+        "v1_may_test": {
+          "precision": 0.42857142857142855,
+          "recall": 0.47368421052631576,
+          "f1": 0.45,
+          "positive_count": 19,
+          "predicted_count": 21,
+          "sample_count": 70,
+          "confusion_matrix": [
+            [
+              39,
+              12
+            ],
+            [
+              10,
+              9
+            ]
+          ]
+        },
+        "v2_fuel_only": {
+          "precision": 1.0,
+          "recall": 0.04878048780487805,
+          "f1": 0.09302325581395349,
+          "positive_count": 205,
+          "predicted_count": 10,
+          "sample_count": 601,
+          "confusion_matrix": [
+            [
+              396,
+              0
+            ],
+            [
+              195,
+              10
+            ]
+          ]
+        },
+        "holdout_rules": {
+          "precision": 0.92,
+          "recall": 0.8975609756097561,
+          "f1": 0.908641975308642,
+          "positive_count": 205,
+          "predicted_count": 200,
+          "sample_count": 601,
+          "confusion_matrix": [
+            [
+              380,
+              16
+            ],
+            [
+              21,
+              184
+            ]
+          ]
+        },
+        "holdout_rules_plus_v2": {
+          "precision": 0.9219512195121952,
+          "recall": 0.9219512195121952,
+          "f1": 0.9219512195121952,
+          "positive_count": 205,
+          "predicted_count": 205,
+          "sample_count": 601,
+          "confusion_matrix": [
+            [
+              380,
+              16
+            ],
+            [
+              16,
+              189
+            ]
+          ]
+        },
+        "typed_v2": {
+          "abnormal_fuel_burn": {
+            "precision": 1.0,
+            "recall": 0.7,
+            "f1": 0.8235294117647058,
+            "positive_count": 10,
+            "predicted_count": 7,
+            "sample_count": 601
+          },
+          "fuel_loss": {
+            "precision": 1.0,
+            "recall": 0.25,
+            "f1": 0.4,
+            "positive_count": 16,
+            "predicted_count": 4,
+            "sample_count": 601
+          }
+        },
+        "matrix_order": "Rows actual [normal, anomaly]; columns predicted [normal, anomaly]: [[TN, FP], [FN, TP]]"
+      },
+      "status": "PASS",
+      "issue": "Metrics are shift-level, not event-level. Combined safety+fuel results are not fuel-only ML performance.",
+      "responsible": {
+        "file": "ml/anomaly.py",
+        "function": "evaluate_fuel",
+        "line": 127
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TT-01",
+      "module": "Task Time Estimator",
+      "input": "Supported equivalent: excavator excavation, 100 m3, dry, prior rain 0 mm, experience 5 years, planned 120 min; haul/truck_01 is unsupported",
+      "expected": "Finite positive duration in minutes for a supported task",
+      "actual": {
+        "duration_min": 162.91278076171875,
+        "scope": "Supported-machine control; literal hauling scenario tested in E2E-01"
+      },
+      "status": "PASS",
+      "issue": "The truck/haul example has no machine class in this project's schema.",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "ModelService.predict_task_duration",
+        "line": 42
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TT-02",
+      "module": "Task Time Estimator",
+      "input": "100 vs 500 quantity across excavation/trenching/truck_loading; every other field fixed",
+      "expected": "Larger quantity predicts longer duration",
+      "actual": [
+        {
+          "task_type": "excavation",
+          "quantity_100_min": 162.91278076171875,
+          "quantity_500_min": 163.45770263671875
+        },
+        {
+          "task_type": "trenching",
+          "quantity_100_min": 158.69894409179688,
+          "quantity_500_min": 159.74978637695312
+        },
+        {
+          "task_type": "truck_loading",
+          "quantity_100_min": 170.86273193359375,
+          "quantity_500_min": 171.40765380859375
+        }
+      ],
+      "status": "PASS",
+      "issue": "planned_duration_min held at 120 as requested; this may conflict with quantity-derived planning.",
+      "responsible": {
+        "file": "ml/training/train.py",
+        "function": "train_duration",
+        "line": 100
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TT-03",
+      "module": "Task Time Estimator",
+      "input": "Dry/0 prior rain vs wet/30 mm prior rain; same task. Current-rain input unavailable",
+      "expected": "Supported wet/prior-rain scenario takes longer",
+      "actual": {
+        "clear_dry_min": 162.91278076171875,
+        "wet_prior_30mm_min": 169.98049926757812,
+        "current_heavy_rain_feature": "absent"
+      },
+      "status": "PASS",
+      "issue": "Only prior rain and ground are supported; current/forecast heavy-rain intensity is not an input.",
+      "responsible": {
+        "file": "ml/features/build.py",
+        "function": "task_features",
+        "line": 31
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TT-04",
+      "module": "Task Time Estimator",
+      "input": "Same task: experience_years 1 vs 15",
+      "expected": "Experienced operator predicts no longer duration and feature affects result",
+      "actual": {
+        "one_year_min": 202.6636505126953,
+        "fifteen_years_min": 147.8024139404297
+      },
+      "status": "PASS",
+      "issue": "Uses experience_years, not learned operator-history aggregates.",
+      "responsible": {
+        "file": "ml/training/train.py",
+        "function": "train_duration",
+        "line": 100
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TT-05",
+      "module": "Task Time Estimator",
+      "input": "Omit rain_prev_24h_mm",
+      "expected": "Fallback or validation error",
+      "actual": {
+        "exception": "ValidationError",
+        "message": "1 validation error for TaskDurationInput\nrain_prev_24h_mm\n  Field required [type=missing, input_value={'machine_class': <Machin..., 'experience_years': 5}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing"
+      },
+      "status": "PASS",
+      "issue": "Missing prior rain is rejected explicitly; there is no weather fallback.",
+      "responsible": {
+        "file": "shared/schemas/prediction.py",
+        "function": "TaskDurationInput",
+        "line": 12
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TT-06",
+      "module": "Task Time Estimator",
+      "input": "quantity=-50",
+      "expected": "Reject negative quantity",
+      "actual": {
+        "exception": "ValidationError",
+        "message": "1 validation error for TaskDurationInput\nquantity\n  Input should be greater than 0 [type=greater_than, input_value=-50, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.13/v/greater_than"
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "shared/schemas/prediction.py",
+        "function": "TaskDurationInput",
+        "line": 12
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TT-07",
+      "module": "Task Time Estimator",
+      "input": "task_type=unseen_task_type",
+      "expected": "Graceful handling",
+      "actual": {
+        "duration_min": 162.91278076171875,
+        "encoder": "handle_unknown=ignore"
+      },
+      "status": "PASS",
+      "issue": "Graceful numerical prediction does not establish accuracy for unseen tasks.",
+      "responsible": {
+        "file": "ml/training/train.py",
+        "function": "preprocessing",
+        "line": 44
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TT-08",
+      "module": "Task Time Estimator",
+      "input": "Execute date_split on completed tasks",
+      "expected": "Training dates precede validation and test dates",
+      "actual": [
+        {
+          "from": "2025-05-01",
+          "through": "2025-05-17",
+          "rows": 334
+        },
+        {
+          "from": "2025-05-19",
+          "through": "2025-05-23",
+          "rows": 107
+        },
+        {
+          "from": "2025-05-24",
+          "through": "2025-05-30",
+          "rows": 125
+        }
+      ],
+      "status": "PASS",
+      "issue": "v2 holdout dates also follow development; previously viewed data are not claimed as a new holdout.",
+      "responsible": {
+        "file": "ml/training/train.py",
+        "function": "date_split",
+        "line": 33
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TT-09",
+      "module": "Task Time Estimator",
+      "input": "Run task_features on all 766 tasks, including partial and missing durations",
+      "expected": "Only completed positive-duration tasks train the estimator",
+      "actual": {
+        "retained": 566,
+        "excluded": 200,
+        "statuses": {
+          "completed": 566
+        }
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/features/build.py",
+        "function": "task_features",
+        "line": 31
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TT-10",
+      "module": "Task Time Estimator",
+      "input": "Saved XGBoost on 125 completed May24–30 tasks",
+      "expected": "Report MAE/RMSE; beat planned-duration baseline",
+      "actual": {
+        "test_count": 125,
+        "mae_min": 35.07584375,
+        "rmse_min": 43.32306372538766,
+        "baseline_mae_min": 57.936
+      },
+      "status": "PASS",
+      "issue": "Re-evaluation of existing held-out split, not a newly unseen test.",
+      "responsible": {
+        "file": "ml/training/train.py",
+        "function": "train_duration",
+        "line": 100
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "EN-01",
+      "module": "Energy Model",
+      "input": "80 L; 10 L/hour; remaining task 240 min",
+      "expected": "40 L required; enough=true; remaining=480 min",
+      "actual": {
+        "prediction": {
+          "estimated_remaining_min": 480.0,
+          "has_sufficient_energy": true,
+          "recommended_action": "none",
+          "method": "linear_consumption_baseline"
+        },
+        "independent_required_l": 40
+      },
+      "status": "PASS",
+      "issue": "The function returns sufficiency and remaining minutes, not an explicit required-energy field.",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "predict_energy_runout",
+        "line": 151
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "EN-02",
+      "module": "Energy Model",
+      "input": "20 L; 10 L/hour; task 240 min",
+      "expected": "enough=false AND explicit REFUEL recommendation",
+      "actual": {
+        "prediction": {
+          "estimated_remaining_min": 120.0,
+          "has_sufficient_energy": false,
+          "recommended_action": "refuel",
+          "method": "linear_consumption_baseline"
+        },
+        "independent_required_l": 40
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "shared/schemas/prediction.py",
+        "function": "EnergyPrediction",
+        "line": 37
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "EN-03",
+      "module": "Energy Model",
+      "input": "70% battery, 8%/hour, 4 hours; normalized explicitly to a 100 kWh battery: 70 kWh, 8 kW",
+      "expected": "Enough battery; remaining=525 min",
+      "actual": {
+        "estimated_remaining_min": 525.0,
+        "has_sufficient_energy": true,
+        "recommended_action": "none",
+        "method": "linear_consumption_baseline"
+      },
+      "status": "PASS",
+      "issue": "The public function accepts kWh/kW, not raw battery percentages.",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "predict_energy_runout",
+        "line": 151
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "EN-04",
+      "module": "Energy Model",
+      "input": "20% on 100 kWh battery; consumption 8 kW; 240-min task; compatible available 50-kW-limited charger",
+      "expected": "Insufficiency plus a real charge recommendation",
+      "actual": {
+        "energy": {
+          "estimated_remaining_min": 150.0,
+          "has_sufficient_energy": false,
+          "recommended_action": "recharge",
+          "method": "linear_consumption_baseline"
+        },
+        "separately_called_charge_advisory": {
+          "energy_point_id": "S01-DC1",
+          "estimated_charge_min": 80.0,
+          "energy_required_kwh": 60.0,
+          "method": "constant_power_estimate"
+        }
+      },
+      "status": "PASS",
+      "issue": "Local composition passes; automatic charger-choice orchestration is absent.",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "suggest_charger",
+        "line": 218
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "EN-05",
+      "module": "Energy Model",
+      "input": "Positive fuel, zero burn",
+      "expected": "No divide-by-zero; unknown time is acceptable",
+      "actual": {
+        "estimated_remaining_min": null,
+        "has_sufficient_energy": null,
+        "recommended_action": "unknown",
+        "method": "linear_consumption_baseline"
+      },
+      "status": "PASS",
+      "issue": "Returns unknown sufficiency instead of infinity.",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "predict_energy_runout",
+        "line": 151
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "EN-06",
+      "module": "Energy Model",
+      "input": "fuel_remaining_l=-10",
+      "expected": "Validation error",
+      "actual": {
+        "exception": "ValidationError",
+        "message": "1 validation error for EnergyInput\nfuel_remaining_l\n  Input should be greater than or equal to 0 [type=greater_than_equal, input_value=-10, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.13/v/greater_than_equal"
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "shared/schemas/prediction.py",
+        "function": "EnergyInput",
+        "line": 28
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "EN-07",
+      "module": "Energy Model",
+      "input": "60 L; 12 L/hour",
+      "expected": "300 min (5 hours)",
+      "actual": {
+        "estimated_remaining_min": 300.0,
+        "has_sufficient_energy": true,
+        "recommended_action": "none",
+        "method": "linear_consumption_baseline"
+      },
+      "status": "PASS",
+      "issue": "This exact-case check tests the transparent baseline, not the learned forecast.",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "predict_energy_runout",
+        "line": 151
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "EN-08",
+      "module": "Energy Model",
+      "input": "Recompute v2 on June–July dataset, both powertrains",
+      "expected": "Learned forecast/replay error lower than recent-hour extrapolation; disclose censoring",
+      "actual": {
+        "by_powertrain": {
+          "diesel": {
+            "forecast_sample_count": 7500,
+            "model_consumption_mae_pct": 0.5107119532740692,
+            "baseline_consumption_mae_pct": 1.2067825854267311,
+            "drawdown_reached_count": 6709,
+            "drawdown_censored_count": 791,
+            "drawdown_comparable_count": 6706,
+            "model_zero_rate_count": 3,
+            "baseline_zero_rate_count": 19,
+            "model_drawdown_mae_min": 23.743864940524578,
+            "baseline_drawdown_mae_min": 42.013043631760205
+          },
+          "electric": {
+            "forecast_sample_count": 1046,
+            "model_consumption_mae_pct": 2.2865126896023065,
+            "baseline_consumption_mae_pct": 4.085871853091141,
+            "drawdown_reached_count": 1013,
+            "drawdown_censored_count": 33,
+            "drawdown_comparable_count": 1012,
+            "model_zero_rate_count": 11,
+            "baseline_zero_rate_count": 3,
+            "model_drawdown_mae_min": 4.476746820758002,
+            "baseline_drawdown_mae_min": 14.059976261203033
+          }
+        },
+        "forecast_min": 60,
+        "drawdown_budget_pct": 5.0,
+        "replay_max_min": 240,
+        "limitation": "Drawdown replay measures time to consume a fixed 5% capacity budget, not actual time until the machine is empty. Censored intervals stop at replenishment, missing data, shift end, or 240 minutes. MAE uses reached cases where both forecasts have positive rates; counts disclose exclusions. Forecast MAE includes all eligible one-hour targets."
+      },
+      "status": "PASS",
+      "issue": "Pass is for forecast and fixed-5%-budget replay comparison; actual empty-machine timing remains unverified.",
+      "responsible": {
+        "file": "ml/energy.py",
+        "function": "evaluate_energy",
+        "line": 182
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TM-01",
+      "module": "Task Matcher",
+      "input": "Available, valid excavator certificate",
+      "expected": "Include eligible operator",
+      "actual": [
+        {
+          "machine_id": "EXC002",
+          "operator_id": "OP1002",
+          "site_id": "S01",
+          "machine_class": "excavator",
+          "certifications": [
+            "excavator"
+          ],
+          "certification_valid_until": {
+            "excavator": "2027-01-01"
+          },
+          "is_machine_available": true,
+          "is_operator_available": true,
+          "estimated_duration_min": 140.0,
+          "estimated_remaining_min": 500.0
+        }
+      ],
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "rank_assignments",
+        "line": 178
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TM-02",
+      "module": "Task Matcher",
+      "input": "Missing certification",
+      "expected": "Exclude, not merely penalize",
+      "actual": [],
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "rank_assignments",
+        "line": 178
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TM-03",
+      "module": "Task Matcher",
+      "input": "Certificate expired 2025-01-01; assignment 2026-09-23",
+      "expected": "Exclude expired certificate",
+      "actual": [],
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "rank_assignments",
+        "line": 178
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TM-04",
+      "module": "Task Matcher",
+      "input": "is_operator_available=false",
+      "expected": "Exclude unavailable operator",
+      "actual": [],
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "rank_assignments",
+        "line": 178
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TM-05",
+      "module": "Task Matcher",
+      "input": "Energy estimate 100 min; task estimate 140 min",
+      "expected": "Reject insufficient-energy machine",
+      "actual": [],
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "rank_assignments",
+        "line": 178
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TM-06",
+      "module": "Task Matcher",
+      "input": "A ETA140, B ETA180; all other eligibility equal",
+      "expected": "A ranks first",
+      "actual": [
+        {
+          "machine_id": "EXC002",
+          "operator_id": "OP1002",
+          "site_id": "S01",
+          "machine_class": "excavator",
+          "certifications": [
+            "excavator"
+          ],
+          "certification_valid_until": {
+            "excavator": "2027-01-01"
+          },
+          "is_machine_available": true,
+          "is_operator_available": true,
+          "estimated_duration_min": 140.0,
+          "estimated_remaining_min": 500.0
+        },
+        {
+          "machine_id": "EXC003",
+          "operator_id": "OP1002",
+          "site_id": "S01",
+          "machine_class": "excavator",
+          "certifications": [
+            "excavator"
+          ],
+          "certification_valid_until": {
+            "excavator": "2027-01-01"
+          },
+          "is_machine_available": true,
+          "is_operator_available": true,
+          "estimated_duration_min": 180.0,
+          "estimated_remaining_min": 500.0
+        }
+      ],
+      "status": "PASS",
+      "issue": "Machine health is not modeled; both fixtures assumed healthy.",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "rank_assignments",
+        "line": 178
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TM-07",
+      "module": "Task Matcher",
+      "input": "One uncertified pair and one unavailable machine",
+      "expected": "Return empty recommendations",
+      "actual": [],
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "rank_assignments",
+        "line": 178
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TM-08",
+      "module": "Task Matcher",
+      "input": "Identical tied eligible pairs, 10 calls",
+      "expected": "Same ordering each call",
+      "actual": [
+        [
+          "EXC002",
+          "EXC003"
+        ],
+        [
+          "EXC002",
+          "EXC003"
+        ],
+        [
+          "EXC002",
+          "EXC003"
+        ],
+        [
+          "EXC002",
+          "EXC003"
+        ],
+        [
+          "EXC002",
+          "EXC003"
+        ],
+        [
+          "EXC002",
+          "EXC003"
+        ],
+        [
+          "EXC002",
+          "EXC003"
+        ],
+        [
+          "EXC002",
+          "EXC003"
+        ],
+        [
+          "EXC002",
+          "EXC003"
+        ],
+        [
+          "EXC002",
+          "EXC003"
+        ]
+      ],
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "rank_assignments",
+        "line": 178
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TM-09",
+      "module": "Task Matcher",
+      "input": "Feed two actual XGBoost predictions into candidates",
+      "expected": "Matcher consumes estimates in ranking",
+      "actual": {
+        "actual_model_durations_min": [
+          162.91278076171875,
+          302.3096618652344
+        ],
+        "ranking": [
+          "EXC002",
+          "EXC003"
+        ]
+      },
+      "status": "PASS",
+      "issue": "Consumes actual model estimates supplied by this test; matcher itself does not invoke duration inference.",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "rank_assignments",
+        "line": 178
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "TM-10",
+      "module": "Task Matcher",
+      "input": "Feed actual 120-min and 480-min energy estimates for a 240-min task",
+      "expected": "Exclude low-energy pair; choose high-energy pair",
+      "actual": {
+        "energy_outputs": [
+          {
+            "estimated_remaining_min": 120.0,
+            "has_sufficient_energy": false,
+            "recommended_action": "refuel",
+            "method": "linear_consumption_baseline"
+          },
+          {
+            "estimated_remaining_min": 480.0,
+            "has_sufficient_energy": true,
+            "recommended_action": "none",
+            "method": "linear_consumption_baseline"
+          }
+        ],
+        "ranking": [
+          "EXC003"
+        ]
+      },
+      "status": "PASS",
+      "issue": "Consumes calculated remaining time, not the boolean field; unknown (None) energy must be excluded by the caller.",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "rank_assignments",
+        "line": 178
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "OA-01",
+      "module": "Operator Analytics",
+      "input": "10 completed tasks for OP1002 plus one shift's telemetry",
+      "expected": "completed_tasks=10",
+      "actual": {
+        "completed_task_fixture_count": 10,
+        "analytics_without_tasks": [
+          {
+            "operator_id": "OP1002",
+            "machine_class": "excavator",
+            "observed_min": 480,
+            "idle_pct": 25.0,
+            "unbelted_moving_pct": 0.0,
+            "unattended_pct": 0.0,
+            "seatbelt_violations": 0,
+            "harsh_events_count": 7,
+            "fuel_used_l": 95.46,
+            "energy_used_kwh": 0.0,
+            "load_cycles_count": 12,
+            "completed_tasks": null
+          }
+        ],
+        "pass_tasks_attempt": {
+          "value": [
+            {
+              "operator_id": "OP1002",
+              "machine_class": "excavator",
+              "observed_min": 480,
+              "idle_pct": 25.0,
+              "unbelted_moving_pct": 0.0,
+              "unattended_pct": 0.0,
+              "seatbelt_violations": 0,
+              "harsh_events_count": 7,
+              "fuel_used_l": 95.46,
+              "energy_used_kwh": 0.0,
+              "load_cycles_count": 12,
+              "completed_tasks": 10
+            }
+          ],
+          "exception": null
+        }
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/features/build.py",
+        "function": "operator_analytics",
+        "line": 80
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "OA-02",
+      "module": "Operator Analytics",
+      "input": "480 observed minutes; 120 idle minutes",
+      "expected": "idle_pct=25 (canonical equivalent of idle_ratio=0.25)",
+      "actual": [
+        {
+          "operator_id": "OP1002",
+          "machine_class": "excavator",
+          "observed_min": 480,
+          "idle_pct": 25.0,
+          "unbelted_moving_pct": 0.0,
+          "unattended_pct": 0.0,
+          "seatbelt_violations": 0,
+          "harsh_events_count": 7,
+          "fuel_used_l": 95.46,
+          "energy_used_kwh": 0.0,
+          "load_cycles_count": 12,
+          "completed_tasks": null
+        }
+      ],
+      "status": "PASS",
+      "issue": "Conventions require percentages 0–100, so 25% is the correct representation.",
+      "responsible": {
+        "file": "ml/features/build.py",
+        "function": "operator_analytics",
+        "line": 80
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "OA-03",
+      "module": "Operator Analytics",
+      "input": "60 moving minutes with exactly 4 unfastened samples",
+      "expected": "Explicit seatbelt violation count=4",
+      "actual": {
+        "analytics": [
+          {
+            "operator_id": "OP1002",
+            "machine_class": "excavator",
+            "observed_min": 60,
+            "idle_pct": 0.0,
+            "unbelted_moving_pct": 6.666666666666667,
+            "unattended_pct": 0.0,
+            "seatbelt_violations": 4,
+            "harsh_events_count": 1,
+            "fuel_used_l": 15.04,
+            "energy_used_kwh": 0.0,
+            "load_cycles_count": 2,
+            "completed_tasks": null
+          }
+        ],
+        "derived_violating_minutes": 4.0
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/features/build.py",
+        "function": "operator_analytics",
+        "line": 80
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "OA-04",
+      "module": "Operator Analytics",
+      "input": "7 harsh events in the synthetic shift",
+      "expected": "Explicit harsh event total=7",
+      "actual": {
+        "analytics": [
+          {
+            "operator_id": "OP1002",
+            "machine_class": "excavator",
+            "observed_min": 480,
+            "idle_pct": 25.0,
+            "unbelted_moving_pct": 0.0,
+            "unattended_pct": 0.0,
+            "seatbelt_violations": 0,
+            "harsh_events_count": 7,
+            "fuel_used_l": 95.46,
+            "energy_used_kwh": 0.0,
+            "load_cycles_count": 12,
+            "completed_tasks": null
+          }
+        ],
+        "shift_feature_harsh_count": 7
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/features/build.py",
+        "function": "operator_analytics",
+        "line": 80
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "OA-05",
+      "module": "Operator Analytics",
+      "input": "OP1002 idle25%; OP1003 idle50%; combined input",
+      "expected": "Separate operator metrics",
+      "actual": [
+        {
+          "operator_id": "OP1002",
+          "machine_class": "excavator",
+          "observed_min": 60,
+          "idle_pct": 25.0,
+          "unbelted_moving_pct": 0.0,
+          "unattended_pct": 0.0,
+          "seatbelt_violations": 0,
+          "harsh_events_count": 1,
+          "fuel_used_l": 11.9325,
+          "energy_used_kwh": 0.0,
+          "load_cycles_count": 2,
+          "completed_tasks": null
+        },
+        {
+          "operator_id": "OP1003",
+          "machine_class": "excavator",
+          "observed_min": 60,
+          "idle_pct": 50.0,
+          "unbelted_moving_pct": 0.0,
+          "unattended_pct": 0.0,
+          "seatbelt_violations": 0,
+          "harsh_events_count": 1,
+          "fuel_used_l": 8.825,
+          "energy_used_kwh": 0.0,
+          "load_cycles_count": 1,
+          "completed_tasks": null
+        }
+      ],
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/features/build.py",
+        "function": "operator_analytics",
+        "line": 80
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "OA-06",
+      "module": "Operator Analytics",
+      "input": "Two days with 25%/75% idle; query only day 1",
+      "expected": "Only requested date appears in analytics",
+      "actual": {
+        "query": {
+          "value": [
+            {
+              "operator_id": "OP1002",
+              "machine_class": "excavator",
+              "observed_min": 60,
+              "idle_pct": 25.0,
+              "unbelted_moving_pct": 0.0,
+              "unattended_pct": 0.0,
+              "seatbelt_violations": 0,
+              "harsh_events_count": 1,
+              "fuel_used_l": 11.9325,
+              "energy_used_kwh": 0.0,
+              "load_cycles_count": 2,
+              "completed_tasks": null
+            }
+          ],
+          "exception": null
+        },
+        "unfiltered": [
+          {
+            "operator_id": "OP1002",
+            "machine_class": "excavator",
+            "observed_min": 120,
+            "idle_pct": 50.0,
+            "unbelted_moving_pct": 0.0,
+            "unattended_pct": 0.0,
+            "seatbelt_violations": 0,
+            "harsh_events_count": 2,
+            "fuel_used_l": 17.65,
+            "energy_used_kwh": 0.0,
+            "load_cycles_count": 3,
+            "completed_tasks": null
+          }
+        ],
+        "caller_prefiltered": [
+          {
+            "operator_id": "OP1002",
+            "machine_class": "excavator",
+            "observed_min": 60,
+            "idle_pct": 25.0,
+            "unbelted_moving_pct": 0.0,
+            "unattended_pct": 0.0,
+            "seatbelt_violations": 0,
+            "harsh_events_count": 1,
+            "fuel_used_l": 11.9325,
+            "energy_used_kwh": 0.0,
+            "load_cycles_count": 2,
+            "completed_tasks": null
+          }
+        ]
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "summarize_operators",
+        "line": 259
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "OA-07",
+      "module": "Operator Analytics",
+      "input": "Typed empty telemetry frame for nonexistent operator",
+      "expected": "Clean empty list",
+      "actual": [],
+      "status": "PASS",
+      "issue": "Input keeps the required schema; a completely columnless DataFrame is not a valid telemetry frame.",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "summarize_operators",
+        "line": 259
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "FP-01",
+      "module": "Feature Pipeline",
+      "input": "Validate actual task linkage; inject existing task_id from another machine",
+      "expected": "Correct source links and reject contradictory links",
+      "actual": {
+        "source_mismatch_count": 0,
+        "foreign_machine_task_injection": {
+          "exception": "ValueError",
+          "message": "Telemetry task links contradict assigned machine/operator/site: T00001"
+        }
+      },
+      "status": "PASS",
+      "issue": "Loader checks task ID existence but not task-to-machine/operator/site consistency.",
+      "responsible": {
+        "file": "ml/features/data.py",
+        "function": "load_data",
+        "line": 26
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "FP-02",
+      "module": "Feature Pipeline",
+      "input": "480 minutes, 120 idle, 7 harsh events; known summed energy and cycles",
+      "expected": "Correct minute counts, percentage and sums",
+      "actual": {
+        "machine_id": "EXC002",
+        "operator_id": "OP1002",
+        "machine_class": "excavator",
+        "date": "2025-08-01",
+        "started_at": "2025-08-01 02:30:00+00:00",
+        "ended_at": "2025-08-01 10:29:00+00:00",
+        "observed_min": 480,
+        "idle_pct": 25.0,
+        "unbelted_moving_pct": 0.0,
+        "seatbelt_violations": 0.0,
+        "unattended_pct": 0.0,
+        "proximity_min_m": 20,
+        "ground_speed_kmh": 0.3,
+        "coolant_temp_c": 88,
+        "harsh_events_count": 7,
+        "fuel_rate_lph": 11.9325,
+        "power_kw": null,
+        "fuel_used_l": 95.46,
+        "energy_used_kwh": 0.0,
+        "load_cycles_count": 12,
+        "fuel_per_load_cycle_l": 7.954999999999999,
+        "energy_per_load_cycle_kwh": 0.0
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/features/build.py",
+        "function": "shift_features",
+        "line": 42
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "FP-03",
+      "module": "Feature Pipeline",
+      "input": "Append a duplicate machine/timestamp row; test CSV loader and public analytics",
+      "expected": "Reject or deduplicate before aggregation",
+      "actual": {
+        "unique": {
+          "operator_id": "OP1002",
+          "machine_class": "excavator",
+          "observed_min": 60,
+          "idle_pct": 25.0,
+          "unbelted_moving_pct": 0.0,
+          "unattended_pct": 0.0,
+          "seatbelt_violations": 0,
+          "harsh_events_count": 1,
+          "fuel_used_l": 11.9325,
+          "energy_used_kwh": 0.0,
+          "load_cycles_count": 2,
+          "completed_tasks": null
+        },
+        "duplicated_public_analytics": {
+          "exception": "ValueError",
+          "message": "Duplicate machine telemetry timestamps"
+        },
+        "loader_duplicate_check": {
+          "exception": "ValueError",
+          "message": "Duplicate machine telemetry timestamps"
+        }
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/features/build.py",
+        "function": "shift_features",
+        "line": 42
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "FP-04",
+      "module": "Feature Pipeline",
+      "input": "Remove five idle minutes from a 60-minute history",
+      "expected": "Observed-window aggregation or explicit rejection",
+      "actual": {
+        "analytics": {
+          "operator_id": "OP1002",
+          "machine_class": "excavator",
+          "observed_min": 55,
+          "idle_pct": 18.181818181818183,
+          "unbelted_moving_pct": 0.0,
+          "unattended_pct": 0.0,
+          "seatbelt_violations": 0,
+          "harsh_events_count": 1,
+          "fuel_used_l": 11.715,
+          "energy_used_kwh": 0.0,
+          "load_cycles_count": 2,
+          "completed_tasks": null
+        },
+        "energy": {
+          "exception": "ValueError",
+          "message": "Exactly 60 consecutive one-minute samples are required"
+        }
+      },
+      "status": "PASS",
+      "issue": "Analytics uses observed minutes; it does not report a coverage percentage for the missing window.",
+      "responsible": {
+        "file": "ml/features/build.py",
+        "function": "shift_features",
+        "line": 42
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "FP-05",
+      "module": "Feature Pipeline",
+      "input": "Actual normalized diesel/electric telemetry plus known hourly-to-minute case",
+      "expected": "Consistent litres/kWh, percentages, km/h and minutes",
+      "actual": {
+        "diesel_kwh_null": true,
+        "electric_litres_null": true,
+        "fuel_rate_to_minute_max_rounding_error_l": 0.000500000000000056,
+        "speed_field": "ground_speed_kmh",
+        "idle_output": "0–100 pct",
+        "time_case_min": 300
+      },
+      "status": "PASS",
+      "issue": "No speed conversion is performed; source and features both use km/h.",
+      "responsible": {
+        "file": "ml/features/data.py",
+        "function": "load_data",
+        "line": 26
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "FP-06",
+      "module": "Feature Pipeline",
+      "input": "Perturb future energy consumption; inspect duration input whitelist",
+      "expected": "No future-derived inference inputs",
+      "actual": {
+        "energy_future_mutation_preserves_first_input": true,
+        "duration_outcome_features": [],
+        "duration_inputs": [
+          "machine_class",
+          "task_type",
+          "ground_condition",
+          "quantity",
+          "unit",
+          "planned_duration_min",
+          "rain_prev_24h_mm",
+          "experience_years"
+        ]
+      },
+      "status": "PASS",
+      "issue": "Anomaly scoring is retrospective after a shift; ground condition/prior rainfall must be measured before task prediction.",
+      "responsible": {
+        "file": "ml/energy.py",
+        "function": "history_features",
+        "line": 35
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "MP-01",
+      "module": "Model Persistence",
+      "input": "Actually train duration model, then joblib.dump to a temporary directory",
+      "expected": "Nonempty model file generated",
+      "actual": {
+        "bytes": 292541,
+        "model_version": "acceptance-audit"
+      },
+      "status": "PASS",
+      "issue": "Original saved models were not overwritten.",
+      "responsible": {
+        "file": "ml/training/train.py",
+        "function": "train_duration",
+        "line": 100
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "MP-02",
+      "module": "Model Persistence",
+      "input": "Fresh Python subprocess loads saved model and predicts",
+      "expected": "Prediction succeeds without retraining",
+      "actual": {
+        "exit_code": 0,
+        "prediction": 162.91278076171875,
+        "steps": [
+          "features",
+          "model"
+        ]
+      },
+      "status": "PASS",
+      "issue": "Child process only called joblib.load and predict.",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "ModelService.__init__",
+        "line": 36
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "MP-03",
+      "module": "Model Persistence",
+      "input": "Compare newly fitted model output before save vs new-process reload",
+      "expected": "Numerically equal predictions",
+      "actual": {
+        "before": 162.91278076171875,
+        "after": 162.91278076171875
+      },
+      "status": "PASS",
+      "issue": "None",
+      "responsible": {
+        "file": "ml/training/train.py",
+        "function": "train_duration",
+        "line": 100
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "MP-04",
+      "module": "Model Persistence",
+      "input": "Inspect and use reloaded duration pipeline; inspect v1/v2 preprocessors",
+      "expected": "Encoders/imputers/scalers and mappings persist",
+      "actual": {
+        "duration_steps": [
+          "features",
+          "model"
+        ],
+        "v1_anomaly_steps": [
+          "features",
+          "model"
+        ],
+        "v2_energy_steps": {
+          "diesel": [
+            "features",
+            "model"
+          ],
+          "electric": [
+            "features",
+            "model"
+          ]
+        },
+        "v2_fuel_rates_persisted": 15
+      },
+      "status": "PASS",
+      "issue": "v2 fuel detector stores its learned class/state rate mapping alongside its forest.",
+      "responsible": {
+        "file": "ml/training/train.py",
+        "function": "preprocessing",
+        "line": 44
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "INT-01",
+      "module": "Integration",
+      "input": "Attempt to locate task-create service; exercise duration function directly",
+      "expected": "Created task response includes estimated duration",
+      "actual": {
+        "api_main_present": false,
+        "local_estimate_min": 162.91278076171875,
+        "create_task_callable": false
+      },
+      "status": "FAIL",
+      "issue": "Task creation/persistence/API is absent; a local prediction is not a task response.",
+      "responsible": {
+        "file": "api/services/tasks.py",
+        "function": "create_task (not implemented)",
+        "line": null
+      },
+      "smallest_fix": "Implement task creation orchestration that invokes ModelService.predict_task_duration and persists/returns the estimate; add an endpoint integration test."
+    },
+    {
+      "test_id": "INT-02",
+      "module": "Integration",
+      "input": "Request create-task→candidate evaluation; run local ranker as control",
+      "expected": "Created task triggers ranked recommendation",
+      "actual": {
+        "task_create_service_present": false,
+        "local_rank": [
+          "EXC002"
+        ]
+      },
+      "status": "FAIL",
+      "issue": "No task service connects creation, model calls and candidate construction.",
+      "responsible": {
+        "file": "api/services/tasks.py",
+        "function": "recommend_assignments (not implemented)",
+        "line": null
+      },
+      "smallest_fix": "Add a service that reads eligible operators/machines, computes duration/energy estimates, constructs candidates and calls rank_assignments."
+    },
+    {
+      "test_id": "INT-03",
+      "module": "Integration",
+      "input": "Local model calculation→matcher with 20 L vs 80 L for 240-min task",
+      "expected": "Choose high-energy machine or return no eligible option",
+      "actual": {
+        "energy_outputs": [
+          {
+            "estimated_remaining_min": 120.0,
+            "has_sufficient_energy": false,
+            "recommended_action": "refuel",
+            "method": "linear_consumption_baseline"
+          },
+          {
+            "estimated_remaining_min": 480.0,
+            "has_sufficient_energy": true,
+            "recommended_action": "none",
+            "method": "linear_consumption_baseline"
+          }
+        ],
+        "ranking": [
+          "EXC003"
+        ]
+      },
+      "status": "PASS",
+      "issue": "Consumes calculated remaining time, not the boolean field; unknown (None) energy must be excluded by the caller.",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "rank_assignments",
+        "line": 178
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "INT-04",
+      "module": "Integration",
+      "input": "Generate 2.5× fuel telemetry; call actual model; check backend/admin delivery",
+      "expected": "Anomaly reaches backend/admin analytics",
+      "actual": {
+        "local_model_output": [
+          {
+            "machine_id": "EXC002",
+            "operator_id": "OP1002",
+            "date": "2025-08-01",
+            "anomaly_types": [
+              "abnormal_fuel_burn"
+            ],
+            "fuel_burn_score": 0.8556701637339579,
+            "fuel_burn_ratio": 2.4999999999999996,
+            "parked_fuel_drop_pct": 0.0,
+            "has_sufficient_fuel_observations": true,
+            "model_version": "v2"
+          }
+        ],
+        "api_present": false,
+        "web_present": false
+      },
+      "status": "FAIL",
+      "issue": "Serializable anomaly results exist, but no backend persistence/event route or admin dashboard consumes them.",
+      "responsible": {
+        "file": "api/services/anomalies.py",
+        "function": "publish_anomaly (not implemented)",
+        "line": null
+      },
+      "smallest_fix": "Persist typed anomaly outputs, publish the agreed event and consume it in the admin UI; keep edge alerts separate."
+    },
+    {
+      "test_id": "INT-05",
+      "module": "Integration",
+      "input": "Simulated working hour followed by idle hour for same operator",
+      "expected": "New telemetry updates that operator's analytics",
+      "actual": {
+        "before": [
+          {
+            "operator_id": "OP1002",
+            "machine_class": "excavator",
+            "observed_min": 60,
+            "idle_pct": 0.0,
+            "unbelted_moving_pct": 0.0,
+            "unattended_pct": 0.0,
+            "seatbelt_violations": 0,
+            "harsh_events_count": 1,
+            "fuel_used_l": 15.04,
+            "energy_used_kwh": 0.0,
+            "load_cycles_count": 2,
+            "completed_tasks": null
+          }
+        ],
+        "after": [
+          {
+            "operator_id": "OP1002",
+            "machine_class": "excavator",
+            "observed_min": 120,
+            "idle_pct": 50.0,
+            "unbelted_moving_pct": 0.0,
+            "unattended_pct": 0.0,
+            "seatbelt_violations": 0,
+            "harsh_events_count": 2,
+            "fuel_used_l": 17.65,
+            "energy_used_kwh": 0.0,
+            "load_cycles_count": 3,
+            "completed_tasks": null
+          }
+        ]
+      },
+      "status": "PASS",
+      "issue": "Local recalculation passes; no persistent/live backend analytics service is claimed.",
+      "responsible": {
+        "file": "ml/inference.py",
+        "function": "summarize_operators",
+        "line": 259
+      },
+      "smallest_fix": "Not required for this case"
+    },
+    {
+      "test_id": "E2E-01",
+      "module": "End-to-End",
+      "input": "Haul 400 tonnes; heavy rain/wet; A certified/B uncertified; machine fuel15%/80%; abnormal fuel during shift",
+      "expected": "Full requested workflow executes with real model/calculation outputs and recommends A+machine B",
+      "actual": {
+        "literal_haul_truck_request": {
+          "exception": "ValidationError",
+          "message": "1 validation error for TaskDurationInput\nmachine_class\n  Input should be 'excavator', 'mini_excavator', 'wheel_loader', 'dozer', 'backhoe_loader', 'electric_excavator' or 'electric_mini_excavator' [type=enum, input_value='truck', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/enum"
+        },
+        "supported_excavator_control": {
+          "eta_min": 358.0052490234375,
+          "clear_eta_min": 296.2331848144531,
+          "low_energy": {
+            "estimated_remaining_min": 245.20791501789947,
+            "has_sufficient_energy": false,
+            "recommended_action": "refuel",
+            "method": "learned_one_hour_consumption",
+            "forecast_used_pct": 3.6703546047210693,
+            "forecast_horizon_min": 60,
+            "is_extrapolation": true,
+            "model_version": "v2"
+          },
+          "high_energy": {
+            "estimated_remaining_min": 1308.1869208723576,
+            "has_sufficient_energy": true,
+            "recommended_action": "none",
+            "method": "learned_one_hour_consumption",
+            "forecast_used_pct": 3.6692004203796387,
+            "forecast_horizon_min": 60,
+            "is_extrapolation": true,
+            "model_version": "v2"
+          },
+          "candidate_sites": {
+            "EXC002": "S01",
+            "EXC003": "S02"
+          },
+          "ranking_for_S01": [],
+          "fuel_anomaly": {
+            "machine_id": "EXC002",
+            "operator_id": "OP1002",
+            "date": "2025-08-01",
+            "anomaly_types": [
+              "abnormal_fuel_burn"
+            ],
+            "fuel_burn_score": 0.8556701637339579,
+            "fuel_burn_ratio": 2.4999999999999996,
+            "parked_fuel_drop_pct": 0.0,
+            "has_sufficient_fuel_observations": true,
+            "model_version": "v2"
+          },
+          "analytics": [
+            {
+              "operator_id": "OP1002",
+              "machine_class": "excavator",
+              "observed_min": 480,
+              "idle_pct": 11.875,
+              "unbelted_moving_pct": 0.0,
+              "unattended_pct": 0.0,
+              "seatbelt_violations": 0,
+              "harsh_events_count": 1,
+              "fuel_used_l": 271.27874999999995,
+              "energy_used_kwh": 0.0,
+              "load_cycles_count": 35,
+              "completed_tasks": null
+            }
+          ]
+        },
+        "hardcoded_predictions_used": false,
+        "api_or_dashboard_exercised": false
+      },
+      "status": "FAIL",
+      "issue": "Literal hauling/truck task unsupported; current-heavy-rain feature and task/API/dashboard orchestration absent. Real-fleet control has no eligible same-site replacement excavator, so the ranker correctly returns none.",
+      "responsible": {
+        "file": "shared/constants.py",
+        "function": "MachineClass",
+        "line": 18
+      },
+      "smallest_fix": "First decide whether hauling/trucks are in scope; if so add class/task/unit support with training data. Then add a task orchestration service with point-in-time weather, inference, energy filtering, anomaly delivery and period-aware analytics. This needs several components, not a one-line fix."
+    }
+  ],
+  "details": {
+    "anomaly_metrics": {
+      "v1_may_test": {
+        "precision": 0.42857142857142855,
+        "recall": 0.47368421052631576,
+        "f1": 0.45,
+        "positive_count": 19,
+        "predicted_count": 21,
+        "sample_count": 70,
+        "confusion_matrix": [
+          [
+            39,
+            12
+          ],
+          [
+            10,
+            9
+          ]
+        ]
+      },
+      "v2_fuel_only": {
+        "precision": 1.0,
+        "recall": 0.04878048780487805,
+        "f1": 0.09302325581395349,
+        "positive_count": 205,
+        "predicted_count": 10,
+        "sample_count": 601,
+        "confusion_matrix": [
+          [
+            396,
+            0
+          ],
+          [
+            195,
+            10
+          ]
+        ]
+      },
+      "holdout_rules": {
+        "precision": 0.92,
+        "recall": 0.8975609756097561,
+        "f1": 0.908641975308642,
+        "positive_count": 205,
+        "predicted_count": 200,
+        "sample_count": 601,
+        "confusion_matrix": [
+          [
+            380,
+            16
+          ],
+          [
+            21,
+            184
+          ]
+        ]
+      },
+      "holdout_rules_plus_v2": {
+        "precision": 0.9219512195121952,
+        "recall": 0.9219512195121952,
+        "f1": 0.9219512195121952,
+        "positive_count": 205,
+        "predicted_count": 205,
+        "sample_count": 601,
+        "confusion_matrix": [
+          [
+            380,
+            16
+          ],
+          [
+            16,
+            189
+          ]
+        ]
+      },
+      "typed_v2": {
+        "abnormal_fuel_burn": {
+          "precision": 1.0,
+          "recall": 0.7,
+          "f1": 0.8235294117647058,
+          "positive_count": 10,
+          "predicted_count": 7,
+          "sample_count": 601
+        },
+        "fuel_loss": {
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4,
+          "positive_count": 16,
+          "predicted_count": 4,
+          "sample_count": 601
+        }
+      },
+      "matrix_order": "Rows actual [normal, anomaly]; columns predicted [normal, anomaly]: [[TN, FP], [FN, TP]]"
+    },
+    "duration_metrics": {
+      "test_count": 125,
+      "mae_min": 35.07584375,
+      "rmse_min": 43.32306372538766,
+      "baseline_mae_min": 57.936
+    },
+    "energy_metrics": {
+      "by_powertrain": {
+        "diesel": {
+          "forecast_sample_count": 7500,
+          "model_consumption_mae_pct": 0.5107119532740692,
+          "baseline_consumption_mae_pct": 1.2067825854267311,
+          "drawdown_reached_count": 6709,
+          "drawdown_censored_count": 791,
+          "drawdown_comparable_count": 6706,
+          "model_zero_rate_count": 3,
+          "baseline_zero_rate_count": 19,
+          "model_drawdown_mae_min": 23.743864940524578,
+          "baseline_drawdown_mae_min": 42.013043631760205
+        },
+        "electric": {
+          "forecast_sample_count": 1046,
+          "model_consumption_mae_pct": 2.2865126896023065,
+          "baseline_consumption_mae_pct": 4.085871853091141,
+          "drawdown_reached_count": 1013,
+          "drawdown_censored_count": 33,
+          "drawdown_comparable_count": 1012,
+          "model_zero_rate_count": 11,
+          "baseline_zero_rate_count": 3,
+          "model_drawdown_mae_min": 4.476746820758002,
+          "baseline_drawdown_mae_min": 14.059976261203033
+        }
+      },
+      "forecast_min": 60,
+      "drawdown_budget_pct": 5.0,
+      "replay_max_min": 240,
+      "limitation": "Drawdown replay measures time to consume a fixed 5% capacity budget, not actual time until the machine is empty. Censored intervals stop at replenishment, missing data, shift end, or 240 minutes. MAE uses reached cases where both forecasts have positive rates; counts disclose exclusions. Forecast MAE includes all eligible one-hour targets."
+    },
+    "end_to_end_trace": {
+      "literal_haul_truck_request": {
+        "exception": "ValidationError",
+        "message": "1 validation error for TaskDurationInput\nmachine_class\n  Input should be 'excavator', 'mini_excavator', 'wheel_loader', 'dozer', 'backhoe_loader', 'electric_excavator' or 'electric_mini_excavator' [type=enum, input_value='truck', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/enum"
+      },
+      "supported_excavator_control": {
+        "eta_min": 358.0052490234375,
+        "clear_eta_min": 296.2331848144531,
+        "low_energy": {
+          "estimated_remaining_min": 245.20791501789947,
+          "has_sufficient_energy": false,
+          "recommended_action": "refuel",
+          "method": "learned_one_hour_consumption",
+          "forecast_used_pct": 3.6703546047210693,
+          "forecast_horizon_min": 60,
+          "is_extrapolation": true,
+          "model_version": "v2"
+        },
+        "high_energy": {
+          "estimated_remaining_min": 1308.1869208723576,
+          "has_sufficient_energy": true,
+          "recommended_action": "none",
+          "method": "learned_one_hour_consumption",
+          "forecast_used_pct": 3.6692004203796387,
+          "forecast_horizon_min": 60,
+          "is_extrapolation": true,
+          "model_version": "v2"
+        },
+        "candidate_sites": {
+          "EXC002": "S01",
+          "EXC003": "S02"
+        },
+        "ranking_for_S01": [],
+        "fuel_anomaly": {
+          "machine_id": "EXC002",
+          "operator_id": "OP1002",
+          "date": "2025-08-01",
+          "anomaly_types": [
+            "abnormal_fuel_burn"
+          ],
+          "fuel_burn_score": 0.8556701637339579,
+          "fuel_burn_ratio": 2.4999999999999996,
+          "parked_fuel_drop_pct": 0.0,
+          "has_sufficient_fuel_observations": true,
+          "model_version": "v2"
+        },
+        "analytics": [
+          {
+            "operator_id": "OP1002",
+            "machine_class": "excavator",
+            "observed_min": 480,
+            "idle_pct": 11.875,
+            "unbelted_moving_pct": 0.0,
+            "unattended_pct": 0.0,
+            "seatbelt_violations": 0,
+            "harsh_events_count": 1,
+            "fuel_used_l": 271.27874999999995,
+            "energy_used_kwh": 0.0,
+            "load_cycles_count": 35,
+            "completed_tasks": null
+          }
+        ]
+      },
+      "hardcoded_predictions_used": false,
+      "api_or_dashboard_exercised": false
+    }
+  },
+  "original_model_hashes": {
+    "ml/models/v1/anomaly.joblib": "e64488e84c2806233b2ad54dc29e71db75e2cc6127de41e99d3f5f1859a0849e",
+    "ml/models/v1/duration.joblib": "fd332fb3f8c96edd09f812163bd71bb8bde1ff2e48b047e2926e8c8b9dc32672",
+    "ml/models/v2/anomaly.joblib": "46c2fb40055605f813d714bd7bc74419d22af959e3a98232a570e507ed7cd695",
+    "ml/models/v2/energy.joblib": "b581d4e9eebf8604e8c5c4cfff5d90ee7b521de67d837a4d7d27ed30647b7b14"
+  },
+  "original_models_unchanged": true,
+  "methodology": [
+    "60 requested acceptance cases, separate from the repository's regression suite.",
+    "Omitted backend components are FAIL (not implemented), not silently skipped; local composition is labeled explicitly.",
+    "General-anomaly fixtures use dozer class medians plus stated user values: dozer median fuel/cycle is 7.67 L, closest to the supplied normal 7.8 L. V2 fuel controls use an excavator normalized to its own class/state baseline.",
+    "TT-01 uses a supported-machine control; the literal unsupported hauling scenario is failed in E2E-01.",
+    "Anomaly ratios map to canonical percentages; EV percentages are normalized using an explicit 100-kWh capacity.",
+    "Saved predictions and metrics are recomputed; original model artifacts are hashed before and after.",
+    "Reused holdouts provide regression evidence, not a new independent validation sample."
+  ],
+  "regression_suite": {
+    "passed": 14,
+    "failed": 0,
+    "command": ".venv/bin/pytest -q",
+    "scope": "Separate pre-existing tests; not included in the 60 acceptance cases"
+  },
+  "critical_findings": [
+    {
+      "title": "Task API orchestration remains absent",
+      "tests": "INT-01, INT-02",
+      "detail": "Member 2 must call the existing duration, energy and ranker functions during task creation and return persisted estimates and recommendations."
+    },
+    {
+      "title": "Anomaly delivery to the admin view remains absent",
+      "tests": "INT-04",
+      "detail": "Member 2 must persist retrospective anomaly results and publish the agreed event; the frontend must consume it."
+    },
+    {
+      "title": "Truck hauling lacks a valid training and fleet path",
+      "tests": "E2E-01",
+      "detail": "The dataset has no truck class, haul task or tonne-based duration target. The requested full workflow also needs backend integration. The model cannot be extended credibly by treating truck loading as hauling."
+    }
+  ]
+}

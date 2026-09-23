@@ -1,0 +1,4 @@
+site_id,name,city,lat,lon,soil_type,speed_limit_kmh
+S01,Chennai OMR metro corridor,Chennai,12.901,80.2279,sandy_clay,10.0
+S02,Bengaluru ring road package 3,Bengaluru,12.9716,77.75,red_soil,10.0
+S03,Hosur aggregate quarry,Hosur,12.7409,77.8253,rocky,10.0

@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cat-operator-ml"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = ["pandas>=2.2,<4", "scikit-learn>=1.5,<2", "xgboost>=2.1,<4", "pydantic>=2.8,<3", "joblib>=1.4,<2"]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "black", "mypy", "pandas-stubs"]
+
+[tool.setuptools.packages.find]
+include = ["ml*", "shared*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+
+[tool.black]
+target-version = ["py311"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true

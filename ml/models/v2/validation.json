@@ -1,0 +1,101 @@
+{
+  "purpose": "development_validation_not_final_test",
+  "train_through": "2025-05-17",
+  "validation_from": "2025-05-19",
+  "anomaly": {
+    "grain": "machine_operator_day",
+    "rules": {
+      "precision": 1.0,
+      "recall": 0.825,
+      "f1": 0.9041095890410958,
+      "positive_count": 40,
+      "predicted_count": 33,
+      "sample_count": 126
+    },
+    "fuel_model_only": {
+      "precision": 1.0,
+      "recall": 0.15,
+      "f1": 0.2608695652173913,
+      "positive_count": 40,
+      "predicted_count": 6,
+      "sample_count": 126
+    },
+    "rules_plus_fuel_model": {
+      "precision": 1.0,
+      "recall": 0.95,
+      "f1": 0.9743589743589743,
+      "positive_count": 40,
+      "predicted_count": 38,
+      "sample_count": 126
+    },
+    "typed_fuel_model": {
+      "abnormal_fuel_burn": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "positive_count": 5,
+        "predicted_count": 5,
+        "sample_count": 126
+      },
+      "fuel_loss": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "positive_count": 1,
+        "predicted_count": 1,
+        "sample_count": 126
+      }
+    },
+    "limitation": "Combined review flags are the union of rule alerts and ML fuel anomalies. Safety alerts are not relabeled as ML detections. Type metrics require the matching fuel type; no credit from unrelated safety alerts."
+  },
+  "energy": {
+    "by_powertrain": {
+      "diesel": {
+        "forecast_sample_count": 1588,
+        "model_consumption_mae_pct": 0.5682632612025987,
+        "baseline_consumption_mae_pct": 1.3123009429112062,
+        "drawdown_reached_count": 1360,
+        "drawdown_censored_count": 228,
+        "drawdown_comparable_count": 1359,
+        "model_zero_rate_count": 0,
+        "baseline_zero_rate_count": 17,
+        "model_drawdown_mae_min": 24.096120015629136,
+        "baseline_drawdown_mae_min": 41.66926173822867
+      },
+      "electric": {
+        "forecast_sample_count": 212,
+        "model_consumption_mae_pct": 2.6087003838995337,
+        "baseline_consumption_mae_pct": 4.25773840408805,
+        "drawdown_reached_count": 201,
+        "drawdown_censored_count": 11,
+        "drawdown_comparable_count": 200,
+        "model_zero_rate_count": 3,
+        "baseline_zero_rate_count": 2,
+        "model_drawdown_mae_min": 4.977295698999357,
+        "baseline_drawdown_mae_min": 12.225499129249965
+      }
+    },
+    "forecast_min": 60,
+    "drawdown_budget_pct": 5.0,
+    "replay_max_min": 240,
+    "limitation": "Drawdown replay measures time to consume a fixed 5% capacity budget, not actual time until the machine is empty. Censored intervals stop at replenishment, missing data, shift end, or 240 minutes. MAE uses reached cases where both forecasts have positive rates; counts disclose exclusions. Forecast MAE includes all eligible one-hour targets."
+  },
+  "source_sha256": {
+    "anomalies_ground_truth.csv": "25532e0e98297c2301bcc35482a3f839aa56dff8d397aafc51d1662c499eea92",
+    "energy_events.csv": "53c0204d367653edaa3c945a7e7cecbeb93a986552e1ec57219dddf491870dd1",
+    "energy_points.csv": "0c61649ad129b4c8ea1fe86aa006db7248dc6d9e98a6e7f71ea5cfedba3f578c",
+    "incidents.csv": "dbc315792e8e65411449cf3b87462e7840def5b774f3bfa9040cf3fe6b13a91e",
+    "machine_summary_2h.csv": "cd74e1cddb485919dae38e225a7e819809b4148f48e466e221bfb7224b728afe",
+    "machines.csv": "8ce851f33353f45dc7b0b102b60ca05f9f31e6040540f0bb6494a526fc963f57",
+    "operators.csv": "a048d83a982c5d2959662c36d703c6d66ce9b51fb4eed722535aa09047685914",
+    "safety_alerts.csv": "5ab854925d891970fe74fd3c36aa65eedc7a20cf5b007f2b9bec13f7e556546f",
+    "sites.csv": "6a87ce0288d91726120ffd94d34b5c69388865cb62edb1cbef51540724db4080",
+    "tasks.csv": "7c4bfc93f59cbaad09d93c1e20b22ec83f7c9c76ae4b2865e40bc583fddc89fc",
+    "telemetry_1min.csv": "e91bab9703a561d2c4822b2a36c5ad57cb446e2cedb572656ed547725f26f51c",
+    "training_records.csv": "50dd0469df72e75cbe28388d5f201bf49b68f0b1d08d6ce4451977be790573b9",
+    "weather_alerts.csv": "e1b2f8784bd3e28c2475f2ac763161584a8acd8f5378cdfcfbf1993ca139922b",
+    "weather_hourly.csv": "31340accc1aea6af17e39dc450214c35aef279d0d4f1134166b70f5e39004f86"
+  },
+  "development_through": "2025-05-30",
+  "created_at": "2026-09-23T08:28:55.720572+00:00"
+}

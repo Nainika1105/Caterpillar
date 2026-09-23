@@ -1,0 +1,148 @@
+{
+  "model_version": "v1",
+  "created_at": "2026-09-23T07:45:38.348699+00:00",
+  "data_rows": {
+    "telemetry_1min": 162000,
+    "tasks": 766,
+    "machines": 12,
+    "operators": 15,
+    "safety_alerts": 161,
+    "anomalies_ground_truth": 128
+  },
+  "duration": {
+    "model_mae_min": 35.07584375,
+    "baseline_mae_min": 57.936,
+    "validation_mae_min": 31.60747642160576,
+    "split": {
+      "train": {
+        "from": "2025-05-01",
+        "through": "2025-05-17",
+        "rows": 334
+      },
+      "validation": {
+        "from": "2025-05-19",
+        "through": "2025-05-23",
+        "rows": 107
+      },
+      "test": {
+        "from": "2025-05-24",
+        "through": "2025-05-30",
+        "rows": 125
+      }
+    }
+  },
+  "anomaly": {
+    "evaluation_grain": "machine_operator_day_any_event_overlap",
+    "model": {
+      "precision": 0.42857142857142855,
+      "recall": 0.47368421052631576,
+      "f1": 0.45,
+      "positive_count": 19,
+      "predicted_count": 21,
+      "sample_count": 70
+    },
+    "baseline": {
+      "precision": 1.0,
+      "recall": 0.7894736842105263,
+      "f1": 0.8823529411764706,
+      "positive_count": 19,
+      "predicted_count": 15,
+      "sample_count": 70
+    },
+    "threshold": 0.4345103696498694,
+    "per_type": {
+      "abnormal_fuel_burn": {
+        "positive_shift_count": 2,
+        "model_shift_recall": 0.0,
+        "baseline_shift_recall": 0.0
+      },
+      "excessive_idling": {
+        "positive_shift_count": 6,
+        "model_shift_recall": 0.3333333333333333,
+        "baseline_shift_recall": 1.0
+      },
+      "fuel_loss": {
+        "positive_shift_count": 1,
+        "model_shift_recall": 0.0,
+        "baseline_shift_recall": 0.0
+      },
+      "harsh_operation": {
+        "positive_shift_count": 5,
+        "model_shift_recall": 0.8,
+        "baseline_shift_recall": 0.8
+      },
+      "overheating": {
+        "positive_shift_count": 2,
+        "model_shift_recall": 1.0,
+        "baseline_shift_recall": 1.0
+      },
+      "overspeed_travel": {
+        "positive_shift_count": 3,
+        "model_shift_recall": 1.0,
+        "baseline_shift_recall": 1.0
+      },
+      "proximity_breach": {
+        "positive_shift_count": 1,
+        "model_shift_recall": 0.0,
+        "baseline_shift_recall": 1.0
+      },
+      "unattended_running": {
+        "positive_shift_count": 1,
+        "model_shift_recall": 0.0,
+        "baseline_shift_recall": 1.0
+      },
+      "unbelted_operation": {
+        "positive_shift_count": 4,
+        "model_shift_recall": 0.75,
+        "baseline_shift_recall": 1.0
+      }
+    },
+    "split": {
+      "train": {
+        "from": "2025-05-01",
+        "through": "2025-05-17",
+        "rows": 174
+      },
+      "validation": {
+        "from": "2025-05-19",
+        "through": "2025-05-23",
+        "rows": 56
+      },
+      "test": {
+        "from": "2025-05-24",
+        "through": "2025-05-30",
+        "rows": 70
+      }
+    },
+    "limitation": "Shift-level overlap does not establish event localization or anomaly-type classification. Baseline overlap may come from an unrelated alert in the same shift."
+  },
+  "energy": {
+    "method": "linear_consumption_baseline",
+    "time_until_empty_mae_min": null,
+    "limitation": "No verified empty events supplied; runout accuracy is not established."
+  },
+  "source_sha256": {
+    "anomalies_ground_truth.csv": "25532e0e98297c2301bcc35482a3f839aa56dff8d397aafc51d1662c499eea92",
+    "energy_events.csv": "53c0204d367653edaa3c945a7e7cecbeb93a986552e1ec57219dddf491870dd1",
+    "energy_points.csv": "0c61649ad129b4c8ea1fe86aa006db7248dc6d9e98a6e7f71ea5cfedba3f578c",
+    "incidents.csv": "dbc315792e8e65411449cf3b87462e7840def5b774f3bfa9040cf3fe6b13a91e",
+    "machine_summary_2h.csv": "cd74e1cddb485919dae38e225a7e819809b4148f48e466e221bfb7224b728afe",
+    "machines.csv": "8ce851f33353f45dc7b0b102b60ca05f9f31e6040540f0bb6494a526fc963f57",
+    "operators.csv": "a048d83a982c5d2959662c36d703c6d66ce9b51fb4eed722535aa09047685914",
+    "safety_alerts.csv": "5ab854925d891970fe74fd3c36aa65eedc7a20cf5b007f2b9bec13f7e556546f",
+    "sites.csv": "6a87ce0288d91726120ffd94d34b5c69388865cb62edb1cbef51540724db4080",
+    "tasks.csv": "7c4bfc93f59cbaad09d93c1e20b22ec83f7c9c76ae4b2865e40bc583fddc89fc",
+    "telemetry_1min.csv": "e91bab9703a561d2c4822b2a36c5ad57cb446e2cedb572656ed547725f26f51c",
+    "training_records.csv": "50dd0469df72e75cbe28388d5f201bf49b68f0b1d08d6ce4451977be790573b9",
+    "weather_alerts.csv": "e1b2f8784bd3e28c2475f2ac763161584a8acd8f5378cdfcfbf1993ca139922b",
+    "weather_hourly.csv": "31340accc1aea6af17e39dc450214c35aef279d0d4f1134166b70f5e39004f86"
+  },
+  "dependencies": {
+    "pandas": "3.0.6",
+    "numpy": "2.4.6",
+    "scikit-learn": "1.9.1",
+    "xgboost": "3.2.0",
+    "joblib": "1.6.0",
+    "pydantic": "2.13.5"
+  }
+}

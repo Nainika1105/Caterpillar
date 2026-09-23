@@ -1,0 +1,19 @@
+site_id,date,alert_type,severity,start,end,advisory
+S01,2025-06-08,thunderstorm_lightning,orange,2025-06-08 14:40:00,2025-06-08 15:40:00,Suspend boom/elevated work; operators stay in cab or shelter
+S01,2025-06-08,heavy_rain,yellow,2025-06-08 15:00:00,2025-06-08 23:59:00,Check trench walls and slopes before next shift; expect soft ground
+S01,2025-06-12,heatwave,orange,2025-06-12 11:00:00,2025-06-12 16:00:00,Mandatory 15-min shaded rest every 2 h; hydration checks; watch coolant temp
+S01,2025-06-13,heatwave,orange,2025-06-13 11:00:00,2025-06-13 16:00:00,Mandatory 15-min shaded rest every 2 h; hydration checks; watch coolant temp
+S01,2025-06-15,heatwave,orange,2025-06-15 11:00:00,2025-06-15 16:00:00,Mandatory 15-min shaded rest every 2 h; hydration checks; watch coolant temp
+S01,2025-06-23,heatwave,orange,2025-06-23 11:00:00,2025-06-23 16:00:00,Mandatory 15-min shaded rest every 2 h; hydration checks; watch coolant temp
+S01,2025-07-02,heatwave,orange,2025-07-02 11:00:00,2025-07-02 16:00:00,Mandatory 15-min shaded rest every 2 h; hydration checks; watch coolant temp
+S01,2025-07-08,thunderstorm_lightning,orange,2025-07-08 16:40:00,2025-07-08 17:40:00,Suspend boom/elevated work; operators stay in cab or shelter
+S02,2025-06-01,thunderstorm_lightning,orange,2025-06-01 13:40:00,2025-06-01 14:40:00,Suspend boom/elevated work; operators stay in cab or shelter
+S02,2025-06-01,heavy_rain,yellow,2025-06-01 14:00:00,2025-06-01 23:59:00,Check trench walls and slopes before next shift; expect soft ground
+S02,2025-06-06,thunderstorm_lightning,orange,2025-06-06 16:40:00,2025-06-06 17:40:00,Suspend boom/elevated work; operators stay in cab or shelter
+S02,2025-06-06,heavy_rain,yellow,2025-06-06 17:00:00,2025-06-06 23:59:00,Check trench walls and slopes before next shift; expect soft ground
+S02,2025-07-20,thunderstorm_lightning,orange,2025-07-20 15:40:00,2025-07-20 16:40:00,Suspend boom/elevated work; operators stay in cab or shelter
+S02,2025-07-20,heavy_rain,yellow,2025-07-20 16:00:00,2025-07-20 23:59:00,Check trench walls and slopes before next shift; expect soft ground
+S03,2025-07-06,thunderstorm_lightning,orange,2025-07-06 15:40:00,2025-07-06 16:40:00,Suspend boom/elevated work; operators stay in cab or shelter
+S03,2025-07-24,thunderstorm_lightning,orange,2025-07-24 13:40:00,2025-07-24 14:40:00,Suspend boom/elevated work; operators stay in cab or shelter
+S03,2025-07-24,heavy_rain,yellow,2025-07-24 14:00:00,2025-07-24 23:59:00,Check trench walls and slopes before next shift; expect soft ground
+S03,2025-07-26,thunderstorm_lightning,orange,2025-07-26 16:40:00,2025-07-26 17:40:00,Suspend boom/elevated work; operators stay in cab or shelter
