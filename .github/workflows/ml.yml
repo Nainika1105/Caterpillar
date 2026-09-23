@@ -27,16 +27,16 @@ jobs:
       - name: Test model training
         run: python -m ml.training.train
         env:
-          CAT_MODEL_DIR: /tmp/cat-model-v1
+          CAT_MODEL_DIR: ${{ runner.temp }}/cat-model-v1-${{ github.run_id }}
 
       - run: python -m ml.demo
 
       - name: Test model improvement
         run: python -m ml.training.improve fit
         env:
-          CAT_MODEL_DIR: /tmp/cat-model-v2
+          CAT_MODEL_DIR: ${{ runner.temp }}/cat-model-v2-${{ github.run_id }}
 
       - name: Test improved model demo
         run: python -m ml.demo_v2
         env:
-          CAT_MODEL_DIR: /tmp/cat-model-v2
+          CAT_MODEL_DIR: ${{ runner.temp }}/cat-model-v2-${{ github.run_id }}
