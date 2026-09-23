@@ -62,6 +62,12 @@ class SeatbeltStatus(StrEnum):
     UNFASTENED = "unfastened"
 
 
+class ProximityZone(StrEnum):
+    CLEAR = "clear"
+    WARNING = "warning"
+    CRITICAL = "critical"
+
+
 class AlertCode(StrEnum):
     SEATBELT_UNFASTENED_MOVING = "seatbelt_unfastened_moving"
     UNATTENDED_RUNNING = "unattended_running"
