@@ -70,6 +70,8 @@ def on_mqtt_connect(client, userdata, flags, rc):
 
 def on_mqtt_message(client, userdata, msg):
     """MQTT message callback"""
+    with open('/tmp/mqtt_debug.txt', 'a') as f:
+        f.write(f"MQTT: {msg.topic}\n")
     try:
         topic = msg.topic
         payload = json.loads(msg.payload.decode('utf-8'))
@@ -90,6 +92,9 @@ def on_mqtt_message(client, userdata, msg):
 def handle_telemetry(payload: dict):
     """Write telemetry to TimescaleDB"""
     stats["telemetry_received"] += 1
+    # DEBUG: Write to file to prove function is called
+    with open('/tmp/telemetry_debug.txt', 'a') as f:
+        f.write(f"{payload.get('machine_id')} @ {payload.get('timestamp')}\n")
 
     required_fields = [
         "timestamp", "site_id", "machine_id", "state",
