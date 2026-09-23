@@ -1,0 +1,16 @@
+operator_id,name,experience_years,home_site_id,shift,certifications
+OP1001,Arjun Kumar,6,S01,day,excavator;mini_excavator;wheel_loader
+OP1002,Suresh Babu,11,S01,day,excavator
+OP1003,Manjunath R,4,S02,day,excavator;mini_excavator
+OP1004,Priya Shankar,3,S02,day,ev_high_voltage;excavator;mini_excavator;wheel_loader
+OP1005,Karthik Raja,5,S01,day,backhoe_loader;ev_high_voltage;excavator;mini_excavator
+OP1006,Venkatesh M,14,S03,day,dozer;excavator
+OP1007,Ravi Teja,2,S01,day,excavator;mini_excavator;wheel_loader
+OP1008,Lakshmi Narayan,9,S03,day,dozer;wheel_loader
+OP1009,Imran Pasha,7,S02,day,dozer
+OP1010,Gopal Krishnan,17,S03,day,dozer
+OP1011,Dinesh Selvam,8,S01,day,backhoe_loader;dozer;wheel_loader
+OP1012,Harish Gowda,5,S02,day,backhoe_loader;excavator
+OP1013,Anand Pillai,12,S01,day,backhoe_loader;ev_high_voltage;excavator;mini_excavator;wheel_loader
+OP1014,Mohammed Rafiq,10,S02,day,backhoe_loader;ev_high_voltage;excavator;mini_excavator;wheel_loader
+OP1015,Sathya Moorthy,1,S03,day,backhoe_loader;excavator;mini_excavator;wheel_loader

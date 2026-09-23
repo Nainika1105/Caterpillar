@@ -1,0 +1,13 @@
+machine_id,machine_class,powertrain,reference_model,site_id,primary_operator_id,engine_hours_at_start,fuel_tank_l,battery_kwh,max_charge_kw,commission_year
+EXC001,mini_excavator,diesel,CAT 303 CR,S01,OP1001,1523.5,45.0,,,2019
+EXC002,excavator,diesel,CAT 320,S01,OP1002,6412.0,345.0,,,2022
+EXC003,excavator,diesel,CAT 320,S02,OP1003,3890.4,345.0,,,2024
+EXC004,electric_excavator,electric,electric 20t excavator (assumed),S02,OP1004,412.7,,300.0,150.0,2024
+EXC005,electric_mini_excavator,electric,electric mini excavator (assumed),S01,OP1005,288.1,,64.0,40.0,2024
+EXC006,excavator,diesel,CAT 320,S03,OP1006,8120.9,345.0,,,2018
+WL001,wheel_loader,diesel,CAT 950 GC,S01,OP1007,5230.2,300.0,,,2019
+WL002,wheel_loader,diesel,CAT 950 GC,S03,OP1008,7011.6,300.0,,,2017
+DZ001,dozer,diesel,CAT D6,S02,OP1009,4402.3,400.0,,,2020
+DZ002,dozer,diesel,CAT D6,S03,OP1010,9310.8,400.0,,,2016
+BH001,backhoe_loader,diesel,CAT 432,S01,OP1011,2210.5,160.0,,,2021
+BH002,backhoe_loader,diesel,CAT 432,S02,OP1012,3105.0,160.0,,,2016
