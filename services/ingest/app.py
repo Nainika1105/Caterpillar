@@ -62,7 +62,6 @@ def on_mqtt_connect(client, userdata, flags, rc):
     """MQTT connect callback"""
     if rc == 0:
         logger.info("✓ Connected to MQTT broker")
-        # Subscribe to telemetry and alert topics
         client.subscribe("site/+/machine/+/telemetry")
         client.subscribe("site/+/machine/+/alerts")
     else:
@@ -102,13 +101,16 @@ def handle_telemetry(payload: dict):
         stats["validation_errors"] += 1
         return
 
-    if db_conn is None:
-        logger.error("db_conn is None!")
-        stats["db_errors"] += 1
-        return
-
     try:
-        cursor = db_conn.cursor()
+        logger.info(f"[TELEMETRY] Inserting for {payload.get('machine_id')}")
+        # Fresh connection for thread safety (MQTT callbacks run in separate thread)
+        conn = psycopg2.connect(
+            host=DB_HOST, port=DB_PORT, database=DB_NAME,
+            user=DB_USER, password=DB_PASSWORD, connect_timeout=5
+        )
+        conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+        cursor = conn.cursor()
+
         cursor.execute("""
             INSERT INTO telemetry (
                 timestamp, site_id, machine_id, operator_id, task_id, state,
@@ -131,9 +133,10 @@ def handle_telemetry(payload: dict):
             )
         """, payload)
         cursor.close()
+        conn.close()
         stats["telemetry_stored"] += 1
-        if stats["telemetry_stored"] % 100 == 0:
-            logger.info(f"Stored {stats['telemetry_stored']} telemetry rows")
+        if stats["telemetry_stored"] % 50 == 0:
+            logger.info(f"✓ {stats['telemetry_stored']} rows")
     except Exception as e:
         logger.error(f"DB error: {e}", exc_info=True)
         stats["db_errors"] += 1
@@ -146,12 +149,17 @@ def handle_alert(payload: dict):
     required_fields = ["alert_id", "timestamp", "machine_id", "rule", "severity"]
 
     if not all(field in payload for field in required_fields):
-        logger.warning(f"Missing required fields in alert")
+        logger.warning(f"Missing fields in alert")
         stats["validation_errors"] += 1
         return
 
     try:
-        cursor = db_conn.cursor()
+        conn = psycopg2.connect(
+            host=DB_HOST, port=DB_PORT, database=DB_NAME,
+            user=DB_USER, password=DB_PASSWORD, connect_timeout=5
+        )
+        conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+        cursor = conn.cursor()
         cursor.execute("""
             INSERT INTO alerts (
                 alert_id, timestamp, machine_id, operator_id, site_id,
@@ -162,8 +170,9 @@ def handle_alert(payload: dict):
             )
         """, payload)
         cursor.close()
+        conn.close()
         stats["alerts_stored"] += 1
-        logger.info(f"Alert stored: {payload['rule']}")
+        logger.info(f"Alert: {payload['rule']}")
     except Exception as e:
         logger.error(f"DB error: {e}", exc_info=True)
         stats["db_errors"] += 1
