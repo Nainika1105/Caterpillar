@@ -7,6 +7,7 @@ No network dependency for critical safety rules.
 
 import time
 import logging
+import uuid
 from datetime import datetime
 from typing import Dict, List, Callable
 from dataclasses import dataclass
@@ -80,9 +81,9 @@ class RuleEngine:
                 self.last_alert_time[rule_name] = time.time()
                 self.alert_counter += 1
 
-                # Create alert
+                # Create alert with globally unique ID using UUID
                 alert = RuleAlert(
-                    alert_id=f"AL{self.alert_counter:05d}",
+                    alert_id=str(uuid.uuid4()),
                     timestamp=current_time,
                     machine_id=self.machine_id,
                     operator_id=operator_id,
