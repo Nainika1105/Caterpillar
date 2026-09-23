@@ -1,26 +1,42 @@
 name: ML checks
+
 on: [push, pull_request]
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: pip
+
       - run: python -m pip install -r requirements.lock
+
       - run: ruff check ml shared tests
+
       - run: black --check ml shared tests
+
       - run: mypy shared
+
       - run: pytest -q
+
       - name: Test model training
         run: python -m ml.training.train
         env:
           CAT_MODEL_DIR: /tmp/cat-model-v1
+
       - run: python -m ml.demo
+
       - name: Test model improvement
         run: python -m ml.training.improve fit
         env:
           CAT_MODEL_DIR: /tmp/cat-model-v2
-      - run: python -m ml.demo_v2
+
+      - name: Test improved model demo
+        run: python -m ml.demo_v2
+        env:
+          CAT_MODEL_DIR: /tmp/cat-model-v2
