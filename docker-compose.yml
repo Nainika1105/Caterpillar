@@ -1,0 +1,107 @@
+version: '3.8'
+
+services:
+  # Time-series database for telemetry
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: caterpillar-timescaledb
+    environment:
+      POSTGRES_DB: caterpillar
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+      - ./services/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # MQTT broker for telemetry and alerts
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: caterpillar-mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./services/mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_logs:/mosquitto/log
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-h", "localhost", "-t", "test"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for caching and event queue
+  redis:
+    image: redis:7-alpine
+    container_name: caterpillar-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Simulator service (Member 1)
+  simulator:
+    build:
+      context: ./services/simulator
+      dockerfile: Dockerfile
+    container_name: caterpillar-simulator
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    environment:
+      MQTT_HOST: mosquitto
+      MQTT_PORT: 1883
+      DATA_DIR: /app/data
+      PLAYBACK_SPEED: 1
+      LOG_LEVEL: INFO
+    volumes:
+      - ./data:/app/data:ro
+    ports:
+      - "8001:8000"
+    restart: unless-stopped
+
+  # Ingest service (Member 2 starts building)
+  ingest:
+    build:
+      context: ./services/ingest
+      dockerfile: Dockerfile
+    container_name: caterpillar-ingest
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+      mosquitto:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      MQTT_HOST: mosquitto
+      MQTT_PORT: 1883
+      DB_HOST: timescaledb
+      DB_PORT: 5432
+      DB_NAME: caterpillar
+      DB_USER: admin
+      DB_PASSWORD: admin123
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      LOG_LEVEL: INFO
+    ports:
+      - "8002:8000"
+    restart: unless-stopped
+
+volumes:
+  timescale_data:
+  mosquitto_data:
+  mosquitto_logs:
+  redis_data:
