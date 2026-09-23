@@ -55,6 +55,8 @@ data/*.parquet
 .pytest_cache/
 .coverage
 htmlcov/
+test_backend.db
+backend.db
 
 # MLflow
 mlruns/

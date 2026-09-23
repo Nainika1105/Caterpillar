@@ -1,17 +1,17 @@
 incident_id,reported_at,machine_id,operator_id,site_id,category,severity,description,linked_anomaly_id,status
-IN0001,2025-05-27 12:45:00,DZ002,OP1010,S03,fuel_loss,high,"Fuel level lower after lunch than before; possible leak or pilferage, supervisor informed",A0129,open
-IN0002,2025-05-17 09:49:00,EXC002,OP1002,S01,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0081,open
-IN0003,2025-05-15 10:54:00,EXC003,OP1014,S02,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0069,open
-IN0004,2025-05-22 14:07:00,BH002,OP1012,S02,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0106,closed
-IN0005,2025-05-13 09:46:00,DZ001,OP1009,S02,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0061,closed
-IN0006,2025-05-14 15:29:00,EXC002,OP1002,S01,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0064,closed
-IN0007,2025-05-22 14:00:00,DZ002,OP1010,S03,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0102,closed
-IN0008,2025-05-01 15:10:00,BH001,OP1011,S01,overheating,high,Coolant warning on dash in afternoon heat; idled down and reported,A0005,open
-IN0009,2025-05-27 15:34:00,EXC001,OP1001,S01,overheating,high,Coolant warning on dash in afternoon heat; idled down and reported,A0126,closed
-IN0010,2025-05-15 12:56:00,WL002,OP1008,S03,fuel_loss,high,"Fuel level lower after lunch than before; possible leak or pilferage, supervisor informed",A0070,closed
-IN0011,2025-05-16 16:04:00,EXC003,OP1003,S02,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0074,open
-IN0012,2025-05-15 14:13:00,EXC001,OP1001,S01,overheating,high,Coolant warning on dash in afternoon heat; idled down and reported,A0068,open
-IN0013,2025-05-17 14:38:00,WL001,OP1013,S01,overheating,high,Coolant warning on dash in afternoon heat; idled down and reported,A0084,open
-IN0014,2025-05-06 15:25:00,EXC001,OP1001,S01,overheating,high,Coolant warning on dash in afternoon heat; idled down and reported,A0026,closed
-IN0015,2025-05-10 09:20:00,,,S02,site_hazard,medium,Trench wall softened after overnight rain; area cordoned off before work,,closed
-IN0016,2025-05-21 09:20:00,,,S03,site_hazard,medium,Loose rock on haul path near crusher; cleared before shift,,closed
+IN0001,2025-05-27T12:45:00Z,DZ002,OP1010,S03,fuel_loss,high,"Fuel level lower after lunch than before; possible leak or pilferage, supervisor informed",A0129,open
+IN0002,2025-05-17T09:49:00Z,EXC002,OP1002,S01,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0081,open
+IN0003,2025-05-15T10:54:00Z,EXC003,OP1014,S02,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0069,open
+IN0004,2025-05-22T14:07:00Z,BH002,OP1012,S02,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0106,closed
+IN0005,2025-05-13T09:46:00Z,DZ001,OP1009,S02,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0061,closed
+IN0006,2025-05-14T15:29:00Z,EXC002,OP1002,S01,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0064,closed
+IN0007,2025-05-22T14:00:00Z,DZ002,OP1010,S03,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0102,closed
+IN0008,2025-05-01T15:10:00Z,BH001,OP1011,S01,overheating,high,Coolant warning on dash in afternoon heat; idled down and reported,A0005,open
+IN0009,2025-05-27T15:34:00Z,EXC001,OP1001,S01,overheating,high,Coolant warning on dash in afternoon heat; idled down and reported,A0126,closed
+IN0010,2025-05-15T12:56:00Z,WL002,OP1008,S03,fuel_loss,high,"Fuel level lower after lunch than before; possible leak or pilferage, supervisor informed",A0070,closed
+IN0011,2025-05-16T16:04:00Z,EXC003,OP1003,S02,proximity_breach,critical,"Ground worker walked into swing radius; stopped machine, spotter reminded",A0074,open
+IN0012,2025-05-15T14:13:00Z,EXC001,OP1001,S01,overheating,high,Coolant warning on dash in afternoon heat; idled down and reported,A0068,open
+IN0013,2025-05-17T14:38:00Z,WL001,OP1013,S01,overheating,high,Coolant warning on dash in afternoon heat; idled down and reported,A0084,open
+IN0014,2025-05-06T15:25:00Z,EXC001,OP1001,S01,overheating,high,Coolant warning on dash in afternoon heat; idled down and reported,A0026,closed
+IN0015,2025-05-10T09:20:00Z,,,S02,site_hazard,medium,Trench wall softened after overnight rain; area cordoned off before work,,closed
+IN0016,2025-05-21T09:20:00Z,,,S03,site_hazard,medium,Loose rock on haul path near crusher; cleared before shift,,closed

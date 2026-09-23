@@ -278,6 +278,47 @@ async def health():
     )
 
 
+@app.get("/telemetry/latest")
+async def latest_telemetry(machine_id: str):
+    """Return the newest stored telemetry row using the shared frontend field names."""
+    conn = connect_db()
+    if conn is None:
+        raise HTTPException(status_code=503, detail="Database unavailable")
+    try:
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            SELECT timestamp, site_id, machine_id, operator_id, task_id, state,
+                   power_on, operator_present, seatbelt_status, engine_rpm,
+                   ground_speed_kmh, fuel_level_pct, battery_soc_pct, fuel_rate_lph,
+                   power_kw, energy_used, hydraulic_pressure_bar, hydraulic_oil_temp_c,
+                   coolant_temp_c, load_cycles, proximity_min_m, proximity_zone,
+                   harsh_events, ambient_temp_c, rain_mm_hr, engine_hours
+            FROM telemetry
+            WHERE machine_id = %s
+            ORDER BY timestamp DESC
+            LIMIT 1
+            """,
+            (machine_id,),
+        )
+        row = cursor.fetchone()
+        columns = [description[0] for description in cursor.description] if cursor.description else []
+        cursor.close()
+        if row is None:
+            raise HTTPException(status_code=404, detail="Telemetry not found")
+        payload = dict(zip(columns, row))
+        payload["is_power_on"] = payload.pop("power_on")
+        payload["is_operator_present"] = payload.pop("operator_present")
+        payload["seatbelt_status"] = str(payload["seatbelt_status"]).lower()
+        energy_used = payload.pop("energy_used")
+        payload["fuel_used_l"] = energy_used if payload.get("fuel_level_pct") is not None else None
+        payload["energy_used_kwh"] = energy_used if payload.get("battery_soc_pct") is not None else None
+        payload["timestamp"] = payload["timestamp"].isoformat() + "Z" if hasattr(payload["timestamp"], "isoformat") else payload["timestamp"]
+        return payload
+    finally:
+        conn.close()
+
+
 @app.get("/stats")
 async def get_stats():
     """Get ingest statistics"""

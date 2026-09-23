@@ -3,6 +3,19 @@
 from enum import StrEnum
 
 
+class Role(StrEnum):
+    ADMIN = "admin"
+    OPERATOR = "operator"
+    TRAINER = "trainer"
+
+
+class Severity(StrEnum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
+
+
 class Powertrain(StrEnum):
     DIESEL = "diesel"
     ELECTRIC = "electric"
